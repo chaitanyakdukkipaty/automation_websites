@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Stacked Elements</title>
+  <link rel="stylesheet" href="../css/stacked.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <div id="navbar"></div>
+  <div class="stack-container">
+    <div class="stacked-element" id="element1" onclick="moveToTop('element1')">Element 1</div>
+    <div class="stacked-element" id="element2" onclick="moveToTop('element2')">Element 2</div>
+    <div class="stacked-element" id="element3" onclick="moveToTop('element3')">Element 3</div>
+    <div class="stacked-element" id="element4" onclick="moveToTop('element4')">Element 4</div>
+    <div class="stacked-element" id="element5" onclick="moveToTop('element5')">Element 5</div>
+  </div>
+
+  <hr>
+  <h1>Navigation Bars</h1>
+
+  <div class="stack-container" id="navigationbar">
+    
+    <nav class="navbar" id="navigationbar-menu">
+      <div class="nav-header">
+        <span class="nav-toggle" id="navToggle">&#9776;</span> 
+      </div>
+      <ul class="nav-menu" id="navMenuMain" aria-labelledby="stackTitle" data-container-type="stack" role="region" placeholder="Navbar">
+        <li><a href="#">Home</a></li>
+        <li id="Basic" placeholder="Nested Elements">
+          <a href="#">Basic</a>
+          <ul class="submenu">
+            <div id="Nested-element-1" placeholder="Nested Element"><li id="navBasicMenu1" aria-labelledby="stackTitle" data-container-type="stack" role="region" placeholder="NavBar1"><a href="#">Login</a></li></div>
+            <li id="navBasicMenu2" aria-labelledby="stackTitle" data-container-type="stack" role="region"><a href="#">Sign Up</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">iFrames</a>
+          <ul class="submenu">
+            <li><a href="#">Same Origin</a></li>
+            <li><a href="#">Cross Origin</a></li>
+            <li><a href="#">iFrame Inside ShadowDOM</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">ShadowDOM</a>
+          <ul class="submenu">
+            <li><a href="#">Standard</a></li>
+            <li><a href="#">Nested ShadowDom</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Misc</a></li>
+        <li><a href="#">Sidebar</a></li>
+        <li><a href="#">Stacked Elements</a></li>
+      </ul>
+      <div class="dropdown-container">
+        <label for="domDropdown">Change DOM Structure:</label>
+        <select id="navigationbar-viewSelector" onchange="toggleNavBarView()">
+          <option value="original">Original</option>
+          <option value="Robust Navigation Bars more than 50 percent change for parent">Robust Navigation Bars more than 50 percent change for parent</option>
+          <option value="Robust Navigation Bars multiple attribute change">Robust Navigation Bars multiple attribute change</option>
+          <option value="Robust Navigation Bars single attribute change">Robust Navigation Bars single attribute change</option>
+        </select>
+      </div>
+    </nav>
+
+  </div>
+
+  <script src="../scripts/stacked.js"></script>
+    <script src="../scripts/script.js"></script>
+</body>
+
+</html>

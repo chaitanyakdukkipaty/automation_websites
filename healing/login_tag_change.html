@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page Tag Change</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    header {
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .form-group input[type="checkbox"] {
+      margin-right: 5px;
+    }
+
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .form-group button:hover {
+      background-color: #0056b3;
+    }
+
+    .form-group input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 20px;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .dropdown select {
+      padding: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: white;
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 10px;
+      }
+
+      header h1 {
+        font-size: 20px;
+      }
+
+      .form-group label {
+        font-size: 14px;
+      }
+
+      .form-group input,
+      .form-group button {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      .dropdown select {
+        font-size: 12px;
+      }
+    }
+  </style>
+  <script>
+    function toggleView() {
+      const view = document.getElementById("viewSelector").value;
+      const loginButton = document.querySelector('[name*=loginButton]')
+
+      if (view === "Original") {
+        // Reset to original
+        if (loginButton.tagName === 'INPUT') {
+          const button = document.createElement('button');
+          button.type = 'submit';
+          button.id = 'loginButton';
+          button.name = 'loginButton';
+          button.innerText = 'Login';
+          loginButton.parentNode.replaceChild(button, loginButton);
+        }
+      } else if (view === "Modified") {
+        // Reset to modified
+        if (loginButton.tagName === 'INPUT') {
+          const button = document.createElement('button');
+          button.type = 'submit';
+          button.id = 'loginButton';
+          button.name = 'loginButton';
+          button.innerText = 'Login';
+          loginButton.parentNode.replaceChild(button, loginButton);
+        }
+        // Modify as needed
+        // You can add modifications for other fields here as needed
+      } else if (view === "For AI Healing") {
+        // Change login button to input
+        const input = document.createElement('input');
+        input.type = 'submit';
+        input.name = 'ai_loginButton';
+        input.value = 'Login';
+        loginButton.parentNode.replaceChild(input, loginButton);
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="dropdown">
+    <label for="viewSelector">View:</label>
+    <select id="viewSelector" onchange="toggleView()">
+      <option value="Original">Original</option>
+      <option value="Modified">Modified</option>
+      <option value="For AI Healing">For AI Healing</option>
+    </select>
+  </div>
+  <div class="container">
+    <header>
+      <h1>Login</h1>
+    </header>
+    <form>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox"> I agree to the Terms & Conditions</label>
+      </div>
+      <div class="form-group">
+        <button type="submit" id="loginButton" name="loginButton">Login</button>
+      </div>
+    </form>
+    <footer>
+      <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+
+</html>

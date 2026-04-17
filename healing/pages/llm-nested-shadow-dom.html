@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nested Shadow DOM Healing Scenarios</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7fa;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .component-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #333;
+      margin-top: 0;
+    }
+
+    select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      background: #f9f9f9;
+      transition: border-color 0.3s ease;
+    }
+
+    select:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Nested Input Component -->
+  <div class="component-box">
+    <h2>Nested Input Component</h2>
+    <select id="shadowdomInputDropdown" onchange="updateNestedInput(this.value)">
+      <option value="original">Original Input</option>
+      <option value="attrSameScore">ShadowDom Input Multiple Attributes Changed (Same Score)</option>
+      <option value="tagChanged">ShadowDom Input Tag Changed to Textarea</option>
+      <option value="tagRemoved">ShadowDom Input Tag Removed</option>
+      <option value="attr50Percent">ShadowDom Input More Than 50% Attributes Changed</option>
+      <option value="movedParent">ShadowDom Input Element Moved to Parent</option>
+    </select>
+    <my-nested-input></my-nested-input>
+  </div>
+
+  <!-- Nested Button Component -->
+  <div class="component-box">
+    <h2>Nested Button Component</h2>
+    <select id="shadowdomButtonDropdown" onchange="updateNestedButton(this.value)">
+      <option value="original">Original Button</option>
+      <option value="attrSameScore">ShadowDom Button Multiple Attributes Changed (Same Score)</option>
+      <option value="tagChanged">ShadowDom Button Tag Changed to Div</option>
+      <option value="tagRemoved">ShadowDom Button Tag Removed</option>
+      <option value="attr50Percent">ShadowDom Button More Than 50% Attributes Changed</option>
+    </select>
+    <my-nested-button></my-nested-button>
+  </div>
+
+  <!-- Nested Textarea Component -->
+  <div class="component-box">
+    <h2>Nested Textarea Component</h2>
+    <select id="shadowdomTextareaDropdown" onchange="updateNestedTextarea(this.value)">
+      <option value="original">Original Textarea</option>
+      <option value="attrSameScore">ShadowDom Textarea Multiple Attributes Changed (Same Score)</option>
+      <option value="tagChanged">ShadowDom Textarea Tag Changed to Div</option>
+      <option value="tagRemoved">ShadowDom Textarea Tag Removed</option>
+      <option value="attr50Percent">ShadowDom Textarea More Than 50% Attributes Changed</option>
+      <option value="movedParent">ShadowDom Textarea Element Moved to Parent</option>
+    </select>
+    <my-nested-textarea></my-nested-textarea>
+  </div>
+
+  <script>
+    // Inner MyInput Component
+    const inputTemplates = {
+      original: `<input id="inputPhone" class="input-field" data-type="text" type="text" placeholder="Enter Phone Number">`,
+      attrSameScore: `<input id="telNo" name="telNo" type="tel" placeholder="123-4567-8901" />
+                      <input id="telNo" name="telNo" type="tel" placeholder="123-4567-8901" />`,
+      tagChanged: `<textarea id="cell" class="input-field" placeholder="Enter Cell Number"></textarea>`,
+      tagRemoved: `<p>Tag Removed</p>`,
+      attr50Percent: `<label for="phone">Enter your phone number:</label>
+                      <input type="tel" id="cell" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">`,
+      movedParent: `<div class="wrapper"><input type="tel" id="cell" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"></div>`
+    };
+
+    class MyInput extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.render('original');
+      }
+      render(state) {
+        this.shadow.innerHTML = `
+                    <style>
+                        input, textarea {
+                            padding: 12px;
+                            border: 1px solid #ddd;
+                            border-radius: 8px;
+                            font-size: 16px;
+                            width: 100%;
+                            max-width: 300px;
+                            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+                            transition: border-color 0.3s ease;
+                        }
+                        input:focus, textarea:focus {
+                            border-color: #007bff;
+                            outline: none;
+                        }
+                        div.wrapper {
+                            padding: 10px;
+                            background: #f9f9f9;
+                            border-radius: 5px;
+                        }
+                    </style>
+                    ${inputTemplates[state]}
+                `;
+      }
+    }
+    customElements.define('my-input', MyInput);
+
+    // Outer Nested Input Component
+    class MyNestedInput extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.shadow.innerHTML = `<my-input></my-input>`;
+      }
+      render(state) {
+        this.shadow.querySelector('my-input').render(state);
+      }
+    }
+    customElements.define('my-nested-input', MyNestedInput);
+
+    // Inner MyButton Component
+    const buttonTemplates = {
+      original: `<button id="btn" class="action-btn" data-action="click">Click Me</button>`,
+      attrSameScore: `<button id="sbtButton" class="action-btn modified" data-test-id="click" title="Modified">New Click</button>
+                      <button id="sbtButton" class="action-btn modified" data-test-id="click" title="Modified">New Click</button>`,
+      tagChanged: `<div id="submit" class="action-btn" role="button">Click To Act</div>`,
+      tagRemoved: `<p>Tag Removed</p>`,
+      attr50Percent: `<button id="btn2" class="new-btn" data-new="yes" style="background: #28a745">New CTA</button>`
+    };
+
+    class MyButton extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.render('original');
+      }
+      render(state) {
+        this.shadow.innerHTML = `
+                    <style>
+                        button, [role="button"] {
+                            padding: 12px 24px;
+                            background: #007bff;
+                            color: #fff;
+                            border: none;
+                            border-radius: 8px;
+                            font-size: 16px;
+                            cursor: pointer;
+                            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+                            transition: transform 0.2s ease, background 0.3s ease;
+                        }
+                        button:hover, [role="button"]:hover {
+                            transform: translateY(-2px);
+                            background: #0056b3;
+                        }
+                    </style>
+                    ${buttonTemplates[state]}
+                `;
+      }
+    }
+    customElements.define('my-button', MyButton);
+
+    // Outer Nested Button Component
+    class MyNestedButton extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.shadow.innerHTML = `<my-button></my-button>`;
+      }
+      render(state) {
+        this.shadow.querySelector('my-button').render(state);
+      }
+    }
+    customElements.define('my-nested-button', MyNestedButton);
+
+    // Inner MyTextarea Component
+    const textareaTemplates = {
+      original: `<textarea id="summary" class="text-area" data-test-id='summary' aria-label='summary' role='textarea' placeholder="Enter Summary"></textarea>`,
+      attrSameScore: `<textarea id="textarea" class="text-area modified" placeholder="Enter Brief" title="Brief Details"></textarea>
+                      <textarea id="textarea" class="text-area modified" placeholder="Enter Brief" title="Brief Details"></textarea>`,
+      tagChanged: `<div id="details" class="text-area" data-test-id='details-for-summary' contenteditable="true">Enter Summary Details</div>`,
+      tagRemoved: `<p id="textarea1" class="text-area">Textarea Removed</p>`,
+      attr50Percent: `<textarea id="newDetails" class="new-area" rows="6" cols="40" placeholder="New Summary Details"></textarea>`,
+      movedParent: `<div class="wrapper"><textarea id="details" class="text-area" data-test-id='summary-at-parent' placeholder="Enter New Summary Details"></textarea></div>`
+    };
+
+    class MyTextarea extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.render('original');
+      }
+      render(state) {
+        this.shadow.innerHTML = `
+                    <style>
+                        textarea, [contenteditable="true"] {
+                            padding: 12px;
+                            border: 1px solid #ddd;
+                            border-radius: 8px;
+                            font-size: 16px;
+                            width: 100%;
+                            max-width: 300px;
+                            height: 100px;
+                            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+                            transition: border-color 0.3s ease;
+                        }
+                        textarea:focus, [contenteditable="true"]:focus {
+                            border-color: #007bff;
+                            outline: none;
+                        }
+                        div.wrapper {
+                            padding: 10px;
+                            background: #f9f9f9;
+                            border-radius: 5px;
+                        }
+                    </style>
+                    ${textareaTemplates[state]}
+                `;
+      }
+    }
+    customElements.define('my-textarea', MyTextarea);
+
+    // Outer Nested Textarea Component
+    class MyNestedTextarea extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.shadow.innerHTML = `<my-textarea></my-textarea>`;
+      }
+      render(state) {
+        this.shadow.querySelector('my-textarea').render(state);
+      }
+    }
+    customElements.define('my-nested-textarea', MyNestedTextarea);
+
+    // Update Functions
+    function updateNestedInput(state) {
+      document.querySelector('my-nested-input').render(state);
+    }
+    function updateNestedButton(state) {
+      document.querySelector('my-nested-button').render(state);
+    }
+    function updateNestedTextarea(state) {
+      document.querySelector('my-nested-textarea').render(state);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic URL</title>
+</head>
+<body>
+    <h1>Main Page Content</h1>
+    <p>This is the content of the main page.</p>
+
+    <iframe id="iframe" width="1000" height="800" srcdoc='
+
+    <html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login Page with Multiple Input Attributes</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f9;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            fieldset {
+                border: 2px solid #ccc;
+                padding: 10px;
+                margin: 10px 0;
+            }
+
+            legend {
+                font-weight: bold;
+                padding: 0 5px;
+            }
+
+            #state-container {
+                display: none;
+                margin-top: 10px;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 600px;
+                max-height: 80vh;
+                padding: 20px;
+                background-color: white;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                text-align: center;
+                overflow-y: auto;
+            }
+
+            header {
+                margin-bottom: 20px;
+            }
+
+            header h1 {
+                margin: 0;
+                font-size: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                text-align: left;
+            }
+
+            .form-group input[type="text"],
+            .form-group input[type="password"],
+            .form-group input[type="email"],
+            .form-group input[type="tel"],
+            .form-group input[type="number"],
+            .form-group input[type="date"],
+            .form-group input[type="url"],
+            .form-group input[type="range"],
+            .form-group input[type="color"] {
+                width: calc(100% - 20px);
+                padding: 10px;
+                margin: 5px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            .form-group button {
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                border: none;
+                color: white;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            .form-group button:hover {
+                background-color: #0056b3;
+            }
+
+            footer {
+                margin-top: 20px;
+            }
+
+            .dropdown {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+
+            .dropdown select {
+                padding: 5px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                background-color: white;
+                font-size: 14px;
+            }
+            .button-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .button-container button {
+                padding: 10px;
+                background-color: #28a745;
+                border: none;
+                color: white;
+                border-radius: 4px;
+                font-size: 14px;
+                cursor: pointer;
+            }
+
+            .form-group textarea {
+                width: calc(100% - 20px);
+                padding: 10px;
+                margin: 5px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+                font-size: 16px;
+            }
+
+            .button-container button:hover {
+                background-color: #218838;
+            }
+
+            .form-group select[multiple] {
+                width: 100%;
+                height: 120px;
+                padding: 10px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                font-size: 14px;
+            }
+
+            .selected-items {
+                margin-top: 20px;
+            }
+
+            .selected-item {
+                display: inline-block;
+                background-color: #f0f0f0;
+                padding: 5px 10px;
+                margin: 5px;
+                border-radius: 15px;
+                position: relative;
+            }
+
+            .selected-item .remove {
+                position: absolute;
+                top: 0;
+                right: 0;
+                cursor: pointer;
+                font-size: 14px;
+                color: red;
+            }
+
+            .selected-item .remove:hover {
+                color: darkred;
+            }
+
+            @media (max-width: 480px) {
+                .container {
+                    padding: 10px;
+                }
+
+                header h1 {
+                    font-size: 20px;
+                }
+
+                .form-group label {
+                    font-size: 14px;
+                }
+
+                .form-group input,
+                .form-group button {
+                    font-size: 14px;
+                    padding: 8px;
+                }
+
+                .dropdown select {
+                    font-size: 12px;
+                }
+
+                .button-container {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="dropdown">
+            <label for="viewSelector">View:</label>
+            <select id="viewSelector" onchange="toggleView()">
+                <option value="Original">Original</option>
+                <option value="Modified">Modified</option>
+                <option value="For AI Healing">For AI Healing</option>
+                <option value="Robust Input Single Attribute Change">Robust Input Single Attribute Change</option>
+                <option value="Robust Input Multiple Attribute Change">Robust Input Mulitple Attribute Change</option>
+                <option value="Robust Input Tag Change">Robust Input Tag Change</option>
+                <option value="Robust Input Fail Multiple Attribute Change">Robust Input Fail Multiple Attribute Change</option>
+                <option value="Robust Input Fail All Attribute Change">Robust Input Fail All Attribute Change</option>
+                <option value="Robust Input Fail Tag Removed">Robust Input Fail Tag Removed</option>
+                <option value="Robust Button Single Attribute Change">Robust Button Single Attribute Change</option>
+                <option value="Robust Button Multiple Attribute Change">Robust Button Mulitple Attribute Change</option>
+                <option value="Robust Button Tag Change">Robust Button Tag Change</option>
+                <option value="Robust Button Fail Multiple Attribute Change">Robust Button Fail Multiple Attribute Change</option>
+                <option value="Robust Button Fail All Attribute Change">Robust Button Fail All Attribute Change</option>
+                <option value="Robust Button Fail Tag Removed">Robust Button Fail Tag Removed</option>
+                <option value="Robust TextArea Single Attribute Change">Robust TextArea Single Attribute Change</option>
+                <option value="Robust TextArea Multiple Attribute Change">Robust TextArea Mulitple Attribute Change</option>
+                <option value="Robust TextArea Tag Change">Robust TextArea Tag Change</option>
+                <option value="Robust TextArea Fail Multiple Attribute Change">Robust TextArea Fail Multiple Attribute Change</option>
+                <option value="Robust TextArea Fail All Attribute Change">Robust TextArea Fail All Attribute Change</option>
+                <option value="Robust TextArea Fail Tag Removed">Robust TextArea Fail Tag Removed</option>
+                <option value="Robust Select Single Value Sibling Attribute Change">Robust Select Single Value Sibling Attribute Change</option>
+                <option value="Robust Select Single Value Fail Tag Changed">Robust Select Single Value Fail Tag Changed</option>
+                <option value="Robust Select Multiple Value Sibling Attribute Change">Robust Select Multiple Value Sibling Attribute Change</option>
+                <option value="Robust Select Multiple Value Fail Tag Removed">Robust Select Multiple Value Fail Tag Removed</option>
+                <option value="Robust FieldSet Single Attribute Change">Robust FieldSet Single Attribute Change</option>
+                <option value="Robust DataList Single Attribute Change">Robust DataList Single Attribute Change</option>
+                <option value="Robust RadioGroups Moved to Child">Robust RadioGroups Moved to Child</option>
+                <option value="Robust Checkboxes Moved to Parent">Robust Checkboxes Moved to Parent</option>
+                <option value="Robust Label With Same Value But All Attribute Change">Robust Label With Same Value But All Attribute Change</option>
+            </select>
+        </div>
+        <div class="container">
+            <header>
+                <h1>Login Form with Multiple Input Types</h1>
+            </header>
+            <form>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter Username" required maxlength="20" pattern="[a-zA-Z0-9]+" title="Only alphanumeric characters are allowed" />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter Email" required />
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label for="single attribute change">Robust Input - Passing Scenarios</label>
+                    <input type="number" id="input-passing-scenarios-robust" name="input-passing-scenarios-robust" placeholder="Enter Random Number between 18-100" required min="18" max="100" title="Must be between 18-100" aria-placeholder="Input field based on accessibility" />
+                </div>
+
+                <div class="form-group">
+                    <label for="multiple-attribute-robust">Robust Input - Failing Scenarios </label>
+                    <input type="number" id="input-failing-scenarios-robust" name="input-failing-scnearios-robust" placeholder="Enter Random Number between 18-100" required min="18" max="100" title="Must be between 18-100" />
+                </div>
+
+                <hr />
+
+                <div class="button-container">
+                    <button type="button" id="button-passing-scenarios" class="btn" data-action="action1" data-state="active" aria-label="Button 1">Button Passing Scenarios</button>
+                    <button type="button" id="button-failing-scenarios" class="btn" data-action="action2" data-state="inactive" aria-label="Button 2" disabled>Button Failing Scenarios</button>
+                </div>
+
+                <br />
+                <hr />
+
+                <div class="form-group">
+                    <label for="textarea-robust-passing-textarea">Robust TextArea - Passing Scenarios</label>
+                    <textarea
+                        id="textarea-robust-passing-textarea"
+                        name="textarea-robust-passing-textarea"
+                        placeholder="Enter Random Number between 18-100"
+                        required
+                        minlength="2"
+                        maxlength="3"
+                        title="Must be between 18-100"
+                        rows="2"
+                        cols="20"
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="textarea-robust-failing-textarea">Robust TextArea - Failing Scnearios</label>
+                    <textarea
+                        id="textarea-robust-failing-textarea"
+                        name="textarea-robust-failing-textarea"
+                        placeholder="Enter Random Number between 18-100"
+                        required
+                        minlength="2"
+                        maxlength="3"
+                        title="Must be between 18-100"
+                        rows="2"
+                        cols="20"
+                    ></textarea>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label for="weekdays">Weekdays</label>
+                    <select id="weekdays" name="weekdays">
+                        <option value="monday">Monday</option>
+                        <option value="tuesday">Tuesday</option>
+                        <option value="wednesday">Wednesday</option>
+                        <option value="thursday">Thursday</option>
+                        <option value="friday">Friday</option>
+                        <option value="saturday">Saturday</option>
+                        <option value="sunday">Sunday</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="month">Month:</label>
+                    <select id="month" name="month" multiple onchange="addSelection(&#39;month&#39;, &#39;month-container&#39;)">
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+
+                <div class="selected-items" id="month-container"></div>
+
+                <hr />
+
+                <fieldset id="educationalInfo" name="educationalInfo">
+                    <legend>Educational Information</legend>
+
+                    <label for="degree">Degree:</label>
+                    <input type="text" id="degree" name="degree" />
+
+                    <label for="yearOfGraduation">Year Of Graduation:</label>
+                    <input type="number" id="yearOfGraduation" name="yearofgraduation" />
+                </fieldset>
+
+                <hr />
+                <div class="form-group">
+                    <label for="countryDatalist">Country:</label>
+                    <input list="countries" id="countryDatalist" name="countryDatalist" />
+                    <datalist id="countriesDatalist" name="countriesDatalist">
+                        <option value="United States"> </option>
+                        <option value="Canada"> </option>
+                        <option value="United Kingdom"> </option>
+                        <option value="Australia"> </option>
+                        <option value="Germany"> </option>
+                        <option value="France"> </option>
+                    </datalist>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <legend>Hobbies</legend>
+                    <br />
+                    <input type="checkbox" name="hobbies" value="reading" /> <label>Reading</label><br />
+                    <input type="checkbox" name="hobbies" value="sports" /> <label>Sports </label><br />
+                    <input type="checkbox" name="hobbies" value="music" /> <label>Music</label><br />
+                    <input type="checkbox" name="hobbies" value="traveling" /> <label>Traveling</label><br />
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <legend>Gender</legend>
+                    <label> <input type="radio" name="gender" value="male" /> Male </label><br />
+                    <label> <input type="radio" name="gender" value="female" /> Female </label><br />
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label for="country">Select Country:</label>
+                    <select id="country" name="country">
+                        <option value="">--Select Country--</option>
+                        <option value="US">United States</option>
+                        <option value="CA">Canada</option>
+                        <option value="IN">India</option>
+                    </select>
+
+                    <div id="state-container">
+                        <label for="state">Select State:</label>
+                        <select id="state" name="state">
+                            <option value="">--Select State--</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <input type="submit" id="loginButton" name="loginButton" value="Submit" />
+                </div>
+            </form>
+            <footer>
+                <p>&copy; 2024 Your Company. All rights reserved.</p>
+            </footer>
+        </div>
+        <script>
+            function toggleView() {
+                const view = document.getElementById("viewSelector").value;
+                const username = document.getElementsByTagName("input")[0];
+                const password = document.getElementsByTagName("input")[1];
+                const loginButton = document.getElementsByTagName("button")[0];
+
+                if (view === "Original") {
+                    username.setAttribute("type", "text");
+                    username.setAttribute("name", "username");
+                    username.setAttribute("id", "username");
+                    username.setAttribute("placeholder", "Username");
+                    username.removeAttribute("class");
+
+                    password.setAttribute("type", "password");
+                    password.setAttribute("name", "password");
+                    password.setAttribute("id", "password");
+                    password.setAttribute("placeholder", "Password");
+                    password.removeAttribute("class");
+
+                    loginButton.setAttribute("type", "button");
+                    loginButton.setAttribute("name", "loginButton");
+                    loginButton.setAttribute("id", "loginButton");
+                    loginButton.removeAttribute("class");
+                    loginButton.innerHTML = "Login";
+                } else if (view === "Modified") {
+                    username.setAttribute("type", "text");
+                    username.removeAttribute("id");
+                    username.setAttribute("name", "username");
+                    username.setAttribute("placeholder", "Modified Username");
+                    username.setAttribute("class", "modified-input");
+
+                    password.setAttribute("type", "password");
+                    password.setAttribute("name", "password");
+                    password.removeAttribute("id");
+                    loginButton.setAttribute("name", "loginButton");
+                    password.setAttribute("placeholder", "Modified Password");
+                    password.setAttribute("class", "modified-input");
+
+                    loginButton.setAttribute("type", "button");
+                    loginButton.removeAttribute("id");
+                    loginButton.setAttribute("class", "modified-button");
+                    loginButton.innerHTML = "Login";
+                } else if (view === "For AI Healing") {
+                    username.removeAttribute("id");
+                    username.removeAttribute("type");
+                    username.setAttribute("name", "ai_username");
+                    username.removeAttribute("placeholder");
+                    username.removeAttribute("class");
+
+                    password.removeAttribute("id");
+                    password.removeAttribute("type");
+                    password.setAttribute("name", "ai_password");
+                    password.removeAttribute("placeholder");
+                    password.removeAttribute("class");
+
+                    loginButton.removeAttribute("id");
+                    loginButton.removeAttribute("type");
+                    loginButton.setAttribute("name", "ai_loginButton");
+                    loginButton.removeAttribute("class");
+                    loginButton.innerHTML = "AI Healing Login";
+                } else if (view === "Robust Input Single Attribute Change" || view === "Robust TextArea Single Attribute Change" || view === "Robust Button Single Attribute Change") {
+                    // Single Attribute Change
+
+                    var singleAttributeChange = view === "Robust Input Single Attribute Change" ? document.getElementsByTagName("input")[2] : document.getElementsByTagName("textarea")[0];
+                    singleAttributeChange = view === "Robust Button Single Attribute Change" ? document.getElementsByTagName("button")[0] : singleAttributeChange;
+                    singleAttributeChange.removeAttribute("id");
+                    singleAttributeChange.setAttribute("placeholder", "Modified Enter Random Number between 18-100");
+                } else if (view === "Robust Input Multiple Attribute Change" || view === "Robust TextArea Multiple Attribute Change" || view === "Robust Button Multiple Attribute Change") {
+                    // Multiple Attribute Change
+                    var multipleAttributeChange = view === "Robust Input Multiple Attribute Change" ? document.getElementsByTagName("input")[2] : document.getElementsByTagName("textarea")[0];
+                    multipleAttributeChange = view === "Robust Button Multiple Attribute Change" ? document.getElementsByTagName("button")[0] : multipleAttributeChange;
+                    multipleAttributeChange.removeAttribute("id");
+                    multipleAttributeChange.setAttribute("name", "modified-multiple-attribute-robust");
+                    view === "Robust Button Multiple Attribute Change" ? multipleAttributeChange.setAttribute("data-state", "active") : multipleAttributeChange.setAttribute("type", "number");
+                    multipleAttributeChange.setAttribute("placeholder", "Modified Enter Random Number between 18-100");
+                } else if (view === "Robust Input Tag Change" || view === "Robust TextArea Tag Change" || view === "Robust Button Tag Change") {
+                    // Tag Change
+                    var tagChange = view === "Robust Input Tag Change" ? document.getElementsByTagName("input")[2] : document.getElementsByTagName("textarea")[0];
+                    tagChange = view === "Robust Button Tag Change" ? document.getElementsByTagName("button")[0] : tagChange;
+                    var newTextArea = view === "Robust Input Tag Change" ? document.createElement("textarea") : document.createElement("input");
+                    newTextArea.name = tagChange.name;
+                    newTextArea.placeholder = "Modified Enter Lorem Ipsum";
+                    newTextArea.required = tagChange.required;
+                    newTextArea.max = tagChange.max;
+                    newTextArea.min = tagChange.min;
+                    newTextArea.title = tagChange.title;
+                    if (view === "Robust Button Tag Change") {
+                        var newInput = document.createElement("input");
+                        newInput.type = "submit";
+                        newInput.id = "button3";
+                        newInput.name = "Button3";
+                        newInput.value = "Button 3";
+                    }
+                    view === "Robust Button Tag Change" ? tagChange.parentNode.replaceChild(newInput, tagChange) : tagChange.parentNode.replaceChild(newTextArea, tagChange);
+                } else if (view === "Robust Input Fail Multiple Attribute Change" || view === "Robust TextArea Fail Multiple Attribute Change" || view === "Robust Button Fail Multiple Attribute Change") {
+                    // Fail Multiple Attribute Change
+                    var failMultipleAttributeChange = view === "Robust Input Fail Multiple Attribute Change" ? document.getElementsByTagName("input")[3] : document.getElementsByTagName("textarea")[1];
+                    failMultipleAttributeChange = view === "Robust Button Fail Multiple Attribute Change" ? document.getElementsByTagName("button")[1] : failMultipleAttributeChange;
+                    for (let i = failMultipleAttributeChange.attributes.length - 1; i >= 0; i--) {
+                        const attributeName = failMultipleAttributeChange.attributes[i].name;
+                        failMultipleAttributeChange.removeAttribute(attributeName);
+                    }
+                    failMultipleAttributeChange.setAttribute("placeholder", "modified-fail-multiple-attribute-change");
+                } else if (view === "Robust Input Fail All Attribute Change" || view === "Robust TextArea Fail All Attribute Change" || view === "Robust Button Fail All Attribute Change") {
+                    // All Attribute Change
+                    var allAttributeChange = view === "Robust Input Fail All Attribute Change" ? document.getElementsByTagName("input")[3] : document.getElementsByTagName("textarea")[1];
+                    allAttributeChange = view === "Robust Button Fail All Attribute Change" ? document.getElementsByTagName("button")[1] : allAttributeChange;
+                    for (let i = allAttributeChange.attributes.length - 1; i >= 0; i--) {
+                        const attributeName = allAttributeChange.attributes[i].name;
+                        allAttributeChange.removeAttribute(attributeName);
+                    }
+                    allAttributeChange.setAttribute("placeholder", "All attribute changed");
+                } else if (view === "Robust Input Fail Tag Removed" || view === "Robust TextArea Fail Tag Removed" || view === "Robust Button Fail Tag Removed") {
+                    // Tag Removed
+                    var tagRemoved = view === "Robust Input Fail Tag Removed" ? document.getElementsByTagName("input")[3] : document.getElementsByTagName("textarea")[1];
+                    tagRemoved = view === "Robust Button Fail Tag Removed" ? document.getElementsByTagName("button")[1] : tagRemoved;
+                    tagRemoved.remove();
+                } else if (view === "Robust Select Single Value Sibling Attribute Change" || view === "Robust Select Multiple Value Sibling Attribute Change") {
+                    var selectSibling = view === "Robust Select Single Value Sibling Attribute Change" ? document.getElementsByTagName("label")[7] : document.getElementsByTagName("label")[8];
+                    selectSibling.setAttribute("for", "new-weekdays");
+                    selectSibling.setAttribute("class", "new-class");
+                    selectSibling.setAttribute("id", "new-id");
+                    selectSibling.setAttribute("style", "color: red; font-size: 18px;");
+                    selectSibling.innerText = "Sibling Changed Label";
+                } else if (view === "Robust Select Single Value Fail Tag Changed" || view === "Robust Select Multiple Value Fail Tag Removed") {
+                    var selectTagChangeOrRemove = view === "Robust Select Single Value Fail Tag Changed" ? document.getElementsByTagName("select")[1] : document.getElementsByTagName("select")[2];
+                    var ulElement = document.createElement("ul");
+                    ulElement.setAttribute("id", selectTagChangeOrRemove.id);
+                    var seasons = ["Winter", "Spring", "Summer", "Autumn"];
+                    seasons.forEach(function (season) {
+                        var li = document.createElement("li");
+                        li.textContent = season;
+                        ulElement.appendChild(li);
+                    });
+                    view === "Robust Select Single Value Fail Tag Changed" ? selectTagChangeOrRemove.parentNode.replaceChild(ulElement, selectTagChangeOrRemove) : selectTagChangeOrRemove.remove();
+                } else if (view === "Robust FieldSet Single Attribute Change" || view === "Robust DataList Single Attribute Change") {
+                    var singleAttributeChange = view === "Robust FieldSet Single Attribute Change" ? document.getElementsByTagName("input")[5] : document.getElementsByTagName("datalist")[0];
+                    view === "Robust FieldSet Single Attribute Change" ? singleAttributeChange.remove() : singleAttributeChange.removeAttribute("id");
+                } else if (view === "Robust RadioGroups Moved to Child") {
+                    const checkboxesContainer = document.getElementsByTagName("div")[16];
+                    const checkboxes = checkboxesContainer.querySelectorAll(&#39;input[type="checkbox"]&#39;);
+                    checkboxesContainer.innerHTML = "";
+                    checkboxes.forEach((checkbox) => {
+                        const label = document.createElement("label");
+                        label.innerHTML = checkbox.value.charAt(0).toUpperCase() + checkbox.value.slice(1);
+                        label.insertBefore(checkbox, label.firstChild);
+                        checkboxesContainer.appendChild(label);
+                        checkboxesContainer.appendChild(document.createElement("br"));
+                    });
+                } else if (view === "Robust Checkboxes Moved to Parent") {
+                    const radioButtonsContainer = document.getElementsByTagName("div")[17];
+                    const radioButtons = radioButtonsContainer.querySelectorAll(&#39;input[type="radio"]&#39;);
+                    radioButtonsContainer.innerHTML = "";
+                    radioButtons.forEach((radioButton) => {
+                        const label = document.createElement("label");
+                        label.innerHTML = radioButton.value.charAt(0).toUpperCase() + radioButton.value.slice(1);
+                        radioButtonsContainer.appendChild(radioButton);
+                        radioButtonsContainer.appendChild(label);
+                        radioButtonsContainer.appendChild(document.createElement("br"));
+                    });
+                } else if (view === "Robust Label With Same Value But All Attribute Change") {
+                    const stateAppearingAsPerCountry = document.getElementsByTagName("select")[4];
+                    stateAppearingAsPerCountry.removeAttribute("id");
+                }
+            }
+
+            function addSelection(type, containerId) {
+                const selectElement = document.getElementById(type);
+                const selectedValue = selectElement.value;
+                if (selectedValue === "") return;
+                const container = document.getElementById(containerId);
+                if (container.querySelector(`[data-value="${selectedValue}"]`)) {
+                    return;
+                }
+                const item = document.createElement("div");
+                item.classList.add("selected-item");
+                item.setAttribute("data-value", selectedValue);
+                item.innerHTML = `${selectedValue} <span class="remove" onclick="removeSelection(&#39;${type}&#39;, &#39;${selectedValue}&#39;)">x</span>`;
+                container.appendChild(item);
+            }
+
+            function removeSelection(type, value) {
+                const container = document.getElementById(type + "-container");
+                const item = container.querySelector(`[data-value="${value}"]`);
+                container.removeChild(item);
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const countrySelect = document.getElementById("country");
+                const stateContainer = document.getElementById("state-container");
+                const stateSelect = document.getElementById("state");
+                const states = {
+                    US: ["California", "Texas", "New York"],
+                    CA: ["Ontario", "Quebec", "British Columbia"],
+                    IN: ["Maharashtra", "Delhi", "Karnataka"],
+                };
+
+                countrySelect.addEventListener("change", function () {
+                    const selectedCountry = countrySelect.value;
+                    stateContainer.style.display = "none";
+                    stateSelect.innerHTML = &#39;<option value="">--Select State--</option>&#39;;
+
+                    if (selectedCountry) {
+                        stateContainer.style.display = "block";
+                        const countryStates = states[selectedCountry] || [];
+                        countryStates.forEach((state) => {
+                            const option = document.createElement("option");
+                            option.value = state;
+                            option.textContent = state;
+                            stateSelect.appendChild(option);
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
+        
+    '>
+
+    </iframe>
+
+    <script>
+        function generateRandomString() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            const length = 8; 
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        const randomString = generateRandomString();
+        const newUrl = window.location.origin + '/dynamic-' + randomString + '.html';
+        history.pushState(null, '', newUrl);
+        document.getElementById('current-url').textContent = newUrl;
+    </script>
+</body>
+</html>

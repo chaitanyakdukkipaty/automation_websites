@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IFrame inside a Shadow DOM</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <iframe-container></iframe-container>
+  <script>
+    class IframeContainer extends HTMLElement {
+      constructor() {
+        super();
+        const shadow = this.attachShadow({ mode: 'open' });
+        const currentHostname = window.location.hostname;
+        const dynamicIframeUrl = `https://${currentHostname}/healing/login.html`;
+
+        shadow.innerHTML = `
+          <style>
+            .iframe-container {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            iframe {
+              width: 100%;
+              height: 100%;
+              border: none;
+            }
+          </style>
+          <div class="iframe-container">
+            <iframe src="${dynamicIframeUrl}" name="loginFrame" id="loginFrame"></iframe>
+          </div>
+        `;
+      }
+    }
+
+    customElements.define('iframe-container', IframeContainer);
+  </script>
+</body>
+
+</html>

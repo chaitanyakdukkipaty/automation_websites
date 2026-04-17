@@ -1,0 +1,133 @@
+/* Sidebar Styles */
+.sidebar {
+  height: 100%;
+  width: 250px; 
+  position: fixed;
+  top: 0;
+  left: -250px; 
+  background-color: #111;
+  overflow-x: hidden;
+  transition: left 0.5s, width 0.5s; 
+  padding-top: 60px;
+  z-index: 999;
+}
+
+/* Sidebar Links */
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #575757;
+}
+
+.sidebar .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 36px;
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* New Styles for Full Sidebar */
+.sidebar.full {
+  width: 100vw; 
+  left: 0; 
+}
+
+/* Main content */
+.content {
+  margin-left: 0;
+  padding: 16px;
+  transition: margin-left 0.5s;
+  background-color: #f1f1f1;
+  z-index: 1; 
+}
+
+/* Sidebar Styles */
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: -250px; 
+  background-color: #111;
+  overflow-x: hidden;
+  transition: left 0.5s, width 0.5s;
+  padding-top: 60px;
+  z-index: 999;
+}
+
+/* Sidebar Links */
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #575757;
+}
+
+.sidebar .nested-options {
+  display: none; 
+  background-color: #222;
+  padding-left: 20px; 
+}
+
+.sidebar .nested-options-4 {
+  display: none; 
+  background-color: #333;
+  padding-left: 30px; 
+}
+
+.sidebar.nested .option1:hover + .nested-options {
+  display: block;
+}
+
+.sidebar.nested .option4:hover + .nested-options-4 {
+  display: block; 
+}
+
+/* Nested Options */
+.sidebar .nested .nested-options a,
+.sidebar .nested .nested-options-4 a {
+  padding: 8px 15px;
+  text-decoration: none;
+  font-size: 16px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar .nested .nested-options a:hover,
+.sidebar .nested .nested-options-4 a:hover {
+  background-color: #575757;
+}
+
+/* Main content */
+.content {
+  margin-left: 0;
+  padding: 16px;
+  transition: margin-left 0.5s;
+  background-color: #f1f1f1;
+  z-index: 1;
+}
+
+
+/* Responsive Design */
+@media screen and (max-height: 450px) {
+  .sidebar { padding-top: 15px; }
+  .sidebar a { font-size: 18px; }
+}

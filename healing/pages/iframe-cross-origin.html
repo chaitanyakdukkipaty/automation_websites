@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iframe Cross origin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            /* Ensure content fits within the iframe */
+        }
+
+        @media (max-width: 768px) {
+            iframe {
+                height: 100vh;
+                /* Ensure full height for mobile screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <iframe id="iframe" width="1000" height="800" src="https://api-qa-ops.bsstag.com/healing/html-tags.html"></iframe>
+    </main>
+
+</body>
+
+</html>

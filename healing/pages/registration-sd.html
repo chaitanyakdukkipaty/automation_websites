@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow DOM with View Toggle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #3C8CE7, #00EAFF);
+        }
+
+        #form-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+
+        select {
+            padding: 5px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dropdown to toggle views -->
+    <div class="dropdown-container">
+        <select id="domDropdown" onchange="toggleView()">
+            <option value="original">Original</option>
+            <option value="modified">Modified</option>
+            <option value="ai-modified">AI</option>
+        </select>
+    </div>
+
+    <!-- Shadow DOM container -->
+    <div id="form-container"></div>
+
+    <script>
+        const container = document.getElementById('form-container');
+        const shadowRoot = container.attachShadow({ mode: 'open' });
+
+        // Original HTML structure inside the Shadow DOM
+        const formTemplate = document.createElement('template');
+        formTemplate.innerHTML = `
+            <style>
+                form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+                }
+
+                label {
+                    font-size: 1rem;
+                    color: #333;
+                }
+
+                input[type="text"], input[type="email"], select {
+                    padding: 10px;
+                    font-size: 1rem;
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                    width: 100%;
+                }
+
+                input[type="submit"] {
+                    background-color: #3C8CE7;
+                    color: white;
+                    padding: 10px;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 1rem;
+                    cursor: pointer;
+                }
+
+                input[type="submit"]:hover {
+                    background-color: #00EAFF;
+                }
+
+                .form-container {
+                    display: flex;
+                    flex-direction: column;
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                }
+            </style>
+
+            <div class="form-container">
+                <form id="eventForm">
+                    <!-- Full Name Field -->
+              <div class="form-group parent-container" data-test-id="parent-fullname">
+                <label for="name" data-testid="label-name">Full Name:</label>
+                <input type="text" id="name" name="fullName" data-qa="input-name" placeholder="Enter your full name" aria-required="true" />
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group sibling-container" data-testid="email-parent">
+                <label for="email" data-testid="label-email">Email Address:</label>
+                <input type="email" id="email" name="email" data-cy="input-email" placeholder="Enter your email" autocomplete="email" aria-required="true" />
+            </div>
+
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        `;
+
+        shadowRoot.appendChild(formTemplate.content.cloneNode(true));
+
+        // Store original HTML for resetting later
+        const originalHTML = shadowRoot.innerHTML;
+
+        // Function to toggle views
+        function toggleView() {
+            const dropdownValue = document.getElementById('domDropdown').value;
+
+            if (dropdownValue === 'modified') {
+                applyModifiedAttributes();
+            } else if (dropdownValue === 'ai-modified') {
+                applyAIHealing();
+            } else {
+                resetToOriginal();
+            }
+        }
+
+        // Function to remove 45% of attributes (e.g., id) for modified view
+        function applyModifiedAttributes() {
+            const inputs = shadowRoot.querySelectorAll('input, select');
+            inputs.forEach((input, index) => {
+                    input.removeAttribute('id');
+                input.placeholder = ''; // Example of modifying other attributes
+            });
+        }
+
+        // Function to remove more than 50% attributes for AI healing
+        function applyAIHealing() {
+            const inputs = shadowRoot.querySelectorAll('input, select');
+            inputs.forEach((input) => {
+                input.removeAttribute('id'); // Remove 'id'
+                input.removeAttribute('name'); // Remove 'name'
+                input.placeholder = 'AI Modified'; // Modify placeholder as an example
+            });
+        }
+
+        // Function to reset the Shadow DOM to the original state
+        function resetToOriginal() {
+            shadowRoot.innerHTML = originalHTML;
+        }
+    </script>
+
+</body>
+</html>

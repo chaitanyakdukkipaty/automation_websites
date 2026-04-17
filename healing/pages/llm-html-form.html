@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🩹 LLM Locator Healing 🩹</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 40px;
+            color: #4267B2;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin: 0 auto;
+            max-height: fit-content;
+            overflow-y: auto;
+        }
+
+        .component-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+        }
+
+        .component-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        [class*="Dropdown"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #fafafa;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: calc(100% - 20px);
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group button {
+            width: 60%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 0 auto;
+            /* Center the button */
+            display: block;
+            /* Ensure the button respects the margin */
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group select[multiple] {
+            height: 100px;
+        }
+
+        fieldset {
+            border: 2px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 13px;
+            padding: 0 4px;
+        }
+
+        .tooltip {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🩹 LLM Locator Healing 🩹</h1>
+    <div class="container">
+        <!-- Component: Login Form Basics -->
+        <div class="component-box">
+            <div class="component-header">Login Form Basics</div>
+            <select class="loginFormDropdown" onchange="updateComponent('loginForm', this.value)">
+                <option value="Original">Original</option>
+                <option value="LLM_Form_Input_Tag_Change">LLM Form Input Tag Change</option>
+                <option value="LLM_Form_Input_Multiple_Attribute_Change">LLM Form Input Multiple Attribute Change</option>
+                <option value="LLM_Form_Input_All_Attribute_Change">LLM Form Input All Attribute Change</option>
+                <option value="LLM_Form_Input_Fail_Tag_Removed">LLM Form Input Fail Tag Removed</option>
+            </select>
+            <div id="loginFormComponent"></div>
+        </div>
+
+        <!-- Component: Input Scenarios -->
+        <div class="component-box">
+            <div class="component-header">Input Scenarios</div>
+            <select class="inputDropdown" onchange="updateComponent('input', this.value)">
+                <option value="Original">Original</option>
+                <option value="LLM_Input_Tag_Change">LLM Input Tag Change</option>
+                <option value="LLM_Input_Multiple_Attribute_Change">LLM Input Multiple Attribute Change</option>
+                <option value="LLM_Input_All_Attribute_Change">LLM Input All Attribute Change</option>
+                <option value="LLM_Input_Fail_Tag_Removed">LLM Input Fail Tag Removed</option>
+            </select>
+            <div id="inputComponent"></div>
+        </div>
+
+        <!-- Component: Button Scenarios -->
+        <div class="component-box">
+            <div class="component-header">Button Scenarios</div>
+            <select class="buttonDropdown" onchange="updateComponent('button', this.value)">
+                <option value="Original">Original</option>
+                <option value="LLM_Button_Tag_Change">LLM Button Tag Change</option>
+                <option value="LLM_Button_Multiple_Attribute_Change">LLM Button Multiple Attribute Change</option>
+                <option value="LLM_Button_All_Attribute_Change">LLM Button All Attribute Change</option>
+                <option value="LLM_Button_Fail_Tag_Removed">LLM Button Fail Tag Removed</option>
+            </select>
+            <div id="buttonComponent"></div>
+        </div>
+
+        <!-- Component: TextArea Scenarios -->
+        <div class="component-box">
+            <div class="component-header">TextArea Scenarios</div>
+            <select class="textareaDropdown" onchange="updateComponent('textarea', this.value)">
+                <option value="Original">Original</option>
+                <option value="LLM_TextArea_Tag_Change">LLM TextArea Tag Change</option>
+                <option value="LLM_TextArea_Multiple_Attribute_Change">LLM TextArea Multiple Attribute Change</option>
+                <option value="LLM_TextArea_All_Attribute_Change">LLM TextArea All Attribute Change</option>
+                <option value="LLM_TextArea_Fail_Tag_Removed">LLM TextArea Fail Tag Removed</option>
+            </select>
+            <div id="textareaComponent"></div>
+        </div>
+
+        <!-- Component: Single Select -->
+        <div class="component-box">
+            <div class="component-header">Single Select</div>
+            <select class="singleSelectDropdown" onchange="updateComponent('singleSelect', this.value)">
+                <option value="Original">Original</option>
+                <option value="LLM_Select_Single_Value_Tag_Changed">LLM Select Single Value Tag Changed</option>
+            </select>
+            <div id="singleSelectComponent"></div>
+        </div>
+
+        <!-- Component: Multiple Select -->
+        <div class="component-box">
+            <div class="component-header">Multiple Select</div>
+            <select class="multipleSelectDropdown" onchange="updateComponent('multipleSelect', this.value)">
+                <option value="Original">Original</option>
+                <option value="LLM_Select_Multiple_Value_Fail_Tag_Removed">LLM Select Multiple Value Fail Tag Removed
+                </option>
+            </select>
+            <div id="multipleSelectComponent"></div>
+        </div>
+    </div>
+    <script>
+        const components = {
+            loginForm: {
+                Original: `
+                    <div class="form-group" data-testid="username-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter Username" required maxlength="20" pattern="[a-zA-Z0-9]+" title="Only alphanumeric characters" data-test="username" aria-label="Username input" autocomplete="username" tabindex="1" data-cy="username-input" alt="Username Input Field" />
+                    </div>
+                    <div class="form-group" data-testid="email-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter Email" required data-test="email" aria-required="true" autocomplete="email" tabindex="2" data-qa="email-field" alt="Email Input Field" />
+                    </div>
+                    <div class="form-group" role="group">
+                        <button type="button" id="loginButton" name="loginButton" data-action="submit" aria-label="Login button" data-qa="login-submit" role="button" tabindex="3" alt="Login Button">Login</button>
+                    </div>
+                `,
+                LLM_Form_Input_Tag_Change: `
+                <!-- Inputs become textareas -->
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <textarea id="username" name="username" placeholder="Enter Username" required maxlength="20" pattern="[a-zA-Z0-9]+" title="Only alphanumeric characters" data-test="username" aria-label="Username input"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <textarea id="email" name="email" placeholder="Enter Email" required data-test="email" aria-required="true"></textarea>
+                    </div>
+                    <div class="form-group" role="group">
+                        <button type="button" id="loginButton" name="loginButton" data-action="submit" aria-label="Login button" data-qa="login-submit" role="button" tabindex="3" alt="Login Button">Login</button>
+                    </div>
+                `,
+                LLM_Form_Input_Multiple_Attribute_Change: `
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Username here" required maxlength="30" pattern="[a-zA-Z]+" data-test="username" aria-label="User input" data-modified="true" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email here" required data-test="email" aria-required="true" data-modified="true" />
+                </div>
+                <div class="form-group" role="group">
+                        <button type="button" id="loginButton" name="loginButton" data-action="submit" aria-label="Login button" data-qa="login-submit" role="button" tabindex="3" alt="Login Button">Login</button>
+                </div>
+                `,
+                LLM_Form_Input_All_Attribute_Change: `
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="user" name="user" placeholder="Your Name" minlength="3" data-input="username" aria-label="Username" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="mail" name="mail" placeholder="Your Email" data-input="email" aria-label="Email" />
+                </div>
+                <div class="form-group" role="group">
+                        <button type="button" id="loginButton" name="loginButton" data-action="submit" aria-label="Login button" data-qa="login-submit" role="button" tabindex="3" alt="Login Button">Login</button>
+                </div>
+                `,
+                LLM_Form_Input_Fail_Tag_Removed: `
+                <div class="form-group">
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                </div>
+                `,
+            },
+            input: {
+                Original: `
+                    <div class="form-group" data-testid="input-group" allow="true" formaction="/submit" slot="input-slot" fontWeight="bold" fontStyle="italic" textDecoration="underline" offsetHeight="50" offsetWidth="200" backgroundImage="url('background.jpg')">
+                        <label for="input-passing-scenarios-llm" id="label" class="labelClass" data-test-id="label" data-cy="input-label">LLM Input - Passing Scenarios</label>
+                        <input type="number" id="input-passing-scenarios-llm" name="input-passing-scenarios-llm" placeholder="Enter Random Number between 18-100" required min="18" max="100" title="Must be between 18-100" aria-placeholder="Input field based on accessibility" data-test="input-passing" style="font-size: 14px;" data-testid="number-input" readonly="false" aria-hidden="false" tabindex="4" data-id="age-input" allow="true" formaction="/submit" slot="input-slot" fontWeight="bold" fontStyle="italic" textDecoration="underline" offsetHeight="50" offsetWidth="200" backgroundImage="url('background.jpg')" />
+                    </div>
+                `,
+                LLM_Input_Tag_Change: `
+                <div class="form-group">
+                    <label for="input-passing-scenarios-llm" id="label" class="labelClass" data-test-id="label">
+                        LLM Input - Passing Scenarios
+                    </label>
+                    <textarea id="input-passing-scenarios-llm" name="input-passing-scenarios-llm" placeholder="Enter Random Number between 18-100" title="Must be between 18-100" aria-placeholder="Input field based on accessibility" data-test="input-passing" style="font-size: 14px;" ></textarea>
+                </div>
+                `,
+                LLM_Input_Multiple_Attribute_Change: `
+                <div class="form-group">
+                    <label for="input-passing-scenarios-llm" id="label" class="labelClass" data-test-id="label">
+                        LLM Input - Passing Scenarios
+                    </label>
+                    <input type="text" id="passing-scenarios-llm" name="input-passing" placeholder="Input a value from 18 to 100" required minlength="2" maxlength="3" title="Input must be a number between 18 and 100" aria-label="Accessible input" data-test="modified-input" style="font-size: 16px; border: 1px solid #ccc;" />
+                </div>
+                `,
+                LLM_Input_All_Attribute_Change: `
+                <div class="form-group" id="input-passing-scenarios-llm" name="input-passing">
+                    <label for="input-passing-user-age-llm" id="label" class="labelClass" data-test-id="label">
+                        Enter Age Input - Passing Scenarios
+                    </label>
+                    <input type="text" id="input-passing-user-age-llm" name="input-passing-user-age" placeholder="Input User age from 18 to 100" aria-describedby="ageHelp" pattern="\d+" data-input="age-field" style="border: 2px solid; font-size: 15px;" />
+                </div>
+                `,
+                LLM_Input_Fail_Tag_Removed: `
+                <div class="form-group">
+                    <label for="input-passing-scenarios-llm" id="label" class="labelClass" data-test-id="label">
+                        LLM Input - Passing Scenarios
+                    </label>
+                    <!-- input is removed -->
+                </div>
+                `,
+            },
+            button: {
+                Original: `
+                    <div class="form-group" data-qa="button-group">
+                        <button type="button" id="button-passing-scenarios" name="button-passing" data-action="action1" data-state="active" aria-label="Button" data-cy="action-button" formmethod="post" tabindex="5" role="button" aria-hidden="false" data-testid="main-button" depth="1" data-src="button-source" srcdoc="button-doc" label="Main Button" textContent="Click Me" innerText="Click Me">Button</button>
+                    </div>
+                `,
+                LLM_Button_Tag_Change: `
+                <div class="form-group">
+                    <input type="button" id="button-passing-scenarios" name="button-passing" value="Button" data-action="action1" data-state="active" aria-label="Button" />
+                </div>
+                `,
+                LLM_Button_Multiple_Attribute_Change: `
+                <div class="form-group">
+                    <button type="submit" id="button-passing-scenarios" name="submitBtn" data-action="formSubmit" data-variant="primary" aria-label="Submit Form" class="btn-primary" > Submit </button>
+                </div>
+                `,
+                LLM_Button_All_Attribute_Change: `
+                <div class="form-group">
+                    <div class="button-passing-scenarios-container">
+                        <button id="button-passing-confirm" class="action-button-passing" data-role="confirm" aria-pressed="false" style="padding: 10px 20px; font-size: 16px;" > Confirm Button </button>
+                    </div>
+                </div>
+                `,
+                LLM_Button_Fail_Tag_Removed: `
+                <div class="form-group">
+                    <!-- button removed -->
+                </div>
+                `
+            },
+            textarea: {
+                Original: `
+                    <div class="form-group" data-testid="textarea-group">
+                        <label for="textarea-llm-passing-textarea" data-cy="textarea-label">LLM TextArea - Passing Scenarios</label>
+                        <textarea id="textarea-llm-passing-textarea" name="textarea-llm-passing" placeholder="Enter Random Number between 18-100" required minlength="2" maxlength="3" title="Must be between 18-100" rows="2" cols="20" data-test="textarea-passing" style="font-size: 14px;" data-qa="text-area-input" contenteditable="true" autocapitalize="sentences" tabindex="6" data-ti="comments-area"></textarea>
+                    </div>
+                `,
+                LLM_TextArea_Tag_Change: `
+                    <div class="form-group">
+                        <label for="textarea-llm-passing-textarea">LLM TextArea - Passing Scenarios</label>
+                        <input type="text" id="textarea-llm-passing-textarea" name="textarea-llm-passing" placeholder="Enter Random Number between 18-100" required minlength="2" maxlength="3" title="Must be between 18-100" data-test="textarea-passing" style="font-size: 14px;" />
+                    </div>
+                `,
+                LLM_TextArea_Multiple_Attribute_Change: `
+                    <div class="form-group">
+                        <label for="textarea-llm-passing-textarea">LLM TextArea - Passing Scenarios</label>
+                        <textarea id="textarea-llm-passing-textarea" name="textarea-llm-passing-modified" placeholder="Input a number (18-100)" required rows="3" cols="30" aria-label="Modified TextArea" data-custom="true" style="font-size: 16px; border: 1px solid #ccc;"></textarea>
+                    </div>
+                `,
+                LLM_TextArea_All_Attribute_Change: `
+                    <div class="form-group">
+                        <label for="modified-textarea">Enter Age</label>
+                        <textarea id="modified-llm-passing-textarea" name="textarea-llm-age-input" placeholder="Enter Age between 18-100" rows="5" cols="40" aria-describedby="ageHelp" data-role="input-box" style="resize: none; font-size: 15px;"></textarea>
+                    </div>
+                `,
+                LLM_TextArea_Fail_Tag_Removed: `
+                    <div class="form-group">
+                        <label for="textarea-llm-passing-textarea">LLM TextArea - Passing Scenarios</label>
+                        <!-- TextArea removed due to fail -->
+                    </div>
+                `
+            },
+            singleSelect: {
+                Original: `
+                    <div class="form-group" data-id="select-single-group">
+                        <label for="weekdays" data-cy="weekday-label">Weekdays</label>
+                        <select id="weekdays" name="weekdays" data-test="single-select" aria-label="Select weekday" data-testid="weekday-selector" role="combobox" tabindex="7" data-qa="weekday-dropdown">
+                            <option value="monday" data-id="monday-option">Monday</option>
+                            <option value="tuesday" data-id="tuesday-option">Tuesday</option>
+                            <option value="wednesday" data-testid="wednesday-option">Wednesday</option>
+                            <option value="thursday" data-cy="thursday-option">Thursday</option>
+                            <option value="friday" data-qa="friday-option">Friday</option>
+                            <option value="saturday">Saturday</option>
+                            <option value="sunday">Sunday</option>
+                        </select>
+                    </div>
+                `,
+                LLM_Select_Single_Value_Tag_Changed: `
+                    <div class="form-group">
+                        <label for="weekdays">Weekdays</label>
+                        <input list="weekday-options" id="weekdays" name="weekdays" data-test="single-select" aria-label="Select weekday" />
+                        <datalist id="weekday-options">
+                            <option value="Monday">
+                            <option value="Tuesday">
+                            <option value="Wednesday">
+                            <option value="Thursday">
+                            <option value="Friday">
+                            <option value="Saturday">
+                            <option value="Sunday">
+                        </datalist>
+                    </div>
+                `
+            },
+            multipleSelect: {
+                Original: `
+                    <div class="form-group" data-testid="multi-select-group">
+                        <label for="month" data-cy="month-label">Month</label>
+                        <select id="month" name="month" multiple data-test="multiple-select" aria-label="Select months" data-cy="month-selector" role="listbox" aria-hidden="false" tabindex="8" data-qa="month-dropdown">
+                            <option value="January" data-qa="january-option">January</option>
+                            <option value="February" data-qa="february-option">February</option>
+                            <option value="March" data-testid="march-option">March</option>
+                            <option value="April" data-cy="april-option">April</option>
+                            <option value="May" data-id="may-option">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+                `,
+                LLM_Select_Multiple_Value_Fail_Tag_Removed: `
+                    <div class="form-group">
+                        <label for="month">Month</label>
+                        <!-- select tag removed due to failure -->
+                    </div>
+                `
+            }
+
+        };
+
+        function updateComponent(componentName, state) {
+            const container = document.getElementById(componentName + 'Component');
+            container.innerHTML = components[componentName][state];
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const componentNames = [
+                'loginForm', 'input', 'button',
+                'textarea', 'singleSelect', 'multipleSelect'
+            ];
+            componentNames.forEach(name => updateComponent(name, 'Original'));
+            initCountryState();
+        });
+    </script>
+</body>
+
+</html>

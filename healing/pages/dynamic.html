@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic URL</title>
+</head>
+<body>
+    <div class="login-form">
+        <h2>Login Form</h2>
+        <form action="https://your-backend-url.com/login" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" aria-label="Initial Username" placeholder="Enter Username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" aria-label="Initial Password" placeholder="Enter Password" required>
+
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+    <script>
+        function generateRandomString() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            const length = 8; 
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        const randomString = generateRandomString();
+        const newUrl = window.location.origin + '/dynamic-' + randomString + '.html';
+        history.pushState(null, '', newUrl);
+        document.getElementById('current-url').textContent = newUrl;
+    </script>
+</body>
+</html>

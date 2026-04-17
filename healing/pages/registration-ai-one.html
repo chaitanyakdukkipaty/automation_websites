@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Register for the AI in Testing event.">
+    <title>AI in Testing - Registration Form</title>
+    <link rel="stylesheet" href="../css/registration.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Dropdown to change DOM structure -->
+        <div class="dropdown-container">
+            <select id="domDropdown" onchange="toggleView()">
+                <option value="original">Original</option>
+                <option value="modified">Modified</option>
+                <option value="ai-modified">AI</option>
+            </select>
+        </div>
+
+        <h1>Registration Form</h1>
+        <form id="registration-form" data-qa="registration-form" aria-labelledby="registrationFormTitle" action="/submit-registration" method="POST">
+
+              <!-- Full Name Field -->
+              <div class="form-group parent-container" data-test-id="parent-fullname">
+                <label for="name" data-testid="label-name">Full Name:</label>
+                <input type="text" id="name" name="fullName" data-qa="input-name" placeholder="Enter your full name" aria-required="true" />
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group sibling-container" data-testid="email-parent">
+                <label for="email" data-testid="label-email">Email Address:</label>
+                <input type="email" id="emailid" name="email" data-cy="input-email" placeholder="Enter your email" autocomplete="email" aria-required="true" />
+            </div>
+        </form>
+    </div>
+
+    <script src="../scripts/registration.js"></script>
+</body>
+</html>

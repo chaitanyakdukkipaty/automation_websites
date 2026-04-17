@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Page</title>
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div id="navbar"></div>
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">×</button>
+        <a href="#" onclick="loadContent('option1')" class="option1" id="option1" placeholder="Option-1">Option 1</a>
+        <div class="nested-options">
+            <a href="#" onclick="loadContent('option4')" class="option4" id="option4" placeholder="Option-4">Option 4</a>
+                <div class="nested-options-4">
+                    <a href="#" onclick="loadContent('option6')" class="option6" id="option6" placeholder="Option-6">Option 6</a>
+                </div>
+            <a href="#" onclick="loadContent('option5')" class="option5">Option 5</a>
+        </div>
+        <a href="#" onclick="loadContent('option2')">Option 2</a>
+        <a href="#" onclick="loadContent('option3')">Option 3</a>
+    </div>
+    
+    <div class="content" id="content">
+        <div class="progress-bar-dropdown">
+            <label for="sidebar-viewSelector">View:</label>
+            <select id="sidebar-viewSelector" onchange="toggleSideBarView()">
+            <option value="Original">Original</option>
+            <option value="Robust Sidebar Single Attribute Change">Robust Sidebar Single Attribute Change</option>
+            <option value="Robust Partial Sidebar Single Attribute Change">Robust Partial Sidebar Single Attribute Change</option>
+            <option value="Robust Full Sidebar Single Attribute Change">Robust Full Sidebar Single Attribute Change</option>
+            <option value="Robust Hover Sidebar Single Attribute Change">Robust Hover Sidebar Single Attribute Change</option>
+            <option value="Robust Slide Content Sidebar Single Attribute Change">Robust Slide Content Sidebar Single Attribute Change</option>
+            <option value="Robust Nested Hover Sidebar Single Attribute Change">Robust Nested Hover Sidebar Single Attribute Change</option>
+            <option value="Robust Collapsible Sidebar Single Attribute Change">Robust Collapsible Sidebar Single Attribute Change</option>
+            </select>
+        </div>
+        <button class="open-btn" onclick="toggleSidebar()">☰ Open Sidebar</button>
+        <button class="partial-btn" onclick="openSidebarPartially()">☰ Open Sidebar Partially</button>
+        <button class="full-btn" onclick="openSidebarFully()">☰ Open Sidebar Fully</button>
+        <button class="nested-btn" onclick="openSidebarNested()">☰ Open Sidebar Nested</button>
+        <div id="dynamic-content">
+            <!-- Loaded content will appear here -->
+            <h2>Welcome</h2>
+            <p>Select an option from the sidebar to load content.</p>
+        </div>
+    </div>
+    
+    <script src="../scripts/sidebar.js"></script>
+    <script src="../scripts/script.js"></script>
+</body>
+</html>

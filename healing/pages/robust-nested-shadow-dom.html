@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robust Nested Shadow DOM Healing Scenarios</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7fa;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .component-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #333;
+      margin-top: 0;
+    }
+
+    select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      background: #f9f9f9;
+      transition: border-color 0.3s ease;
+    }
+
+    select:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Nested Input Component -->
+  <div class="component-box">
+    <h2>Nested Input Component</h2>
+    <select id="robustInputDropdown" onchange="updateNestedInput(this.value)">
+      <option value="original">Original Input</option>
+      <option value="singleAttrChange">Robust Input Single Attribute Change</option>
+      <option value="multiAttrChange">Robust Input Multiple Attribute Change</option>
+      <option value="attr50PercentChange">Robust Input Fail Multiple Attribute more than 50 percent Change</option>
+      <option value="allAttrChange">Robust Input Fail All Attribute Change</option>
+      <option value="tagChange">Robust Input Fail Tag Change</option>
+    </select>
+    <robust-nested-input></robust-nested-input>
+  </div>
+
+  <!-- Nested Button Component -->
+  <div class="component-box">
+    <h2>Nested Button Component</h2>
+    <select id="robustButtonDropdown" onchange="updateNestedButton(this.value)">
+      <option value="original">Original Button</option>
+      <option value="singleAttrChange">Robust Button Single Attribute Change</option>
+      <option value="multiAttrChange">Robust Button Multiple Attribute Change</option>
+      <option value="attr50PercentChange">Robust Button Fail Multiple Attribute more than 50 percent Change</option>
+      <option value="allAttrChange">Robust Button Fail All Attribute Change</option>
+      <option value="tagChange">Robust Button Fail Tag Change</option>
+      <option value="tagRemove">Robust Button Fail Tag Remove</option>
+    </select>
+    <robust-nested-button></robust-nested-button>
+  </div>
+
+  <!-- Nested Textarea Component -->
+  <div class="component-box">
+    <h2>Nested Textarea Component</h2>
+    <select id="robustTextareaDropdown" onchange="updateNestedTextarea(this.value)">
+      <option value="original">Original Textarea</option>
+      <option value="singleAttrChange">Robust Textarea Single Attribute Change</option>
+      <option value="multiAttrChange">Robust Textarea Multiple Attribute Change</option>
+      <option value="attr50PercentChange">Robust Textarea Fail Multiple Attribute more than 50 percent Change</option>
+      <option value="allAttrChange">Robust Textarea Fail All Attribute Change</option>
+      <option value="tagChange">Robust Textarea Fail Tag Change</option>
+      <option value="tagRemove">Robust Textarea Fail Tag Remove</option>
+    </select>
+    <robust-nested-textarea></robust-nested-textarea>
+  </div>
+
+  <script>
+    // Inner RobustInput Component
+    const inputTemplates = {
+      original: `<input id="inputPhone" class="input-field" data-type="text" type="text" placeholder="Enter Phone Number">`,
+      singleAttrChange: `<input id="phoneInput" class="input-field" data-type="text" type="text" placeholder="Enter Phone Number">`,
+      multiAttrChange: `<input id="phoneInput" class="phone-input" data-type="text" type="text" placeholder="Enter Phone Number">`,
+      attr50PercentChange: `<input id="phoneInput" class="phone-input" data-type="text" type="tel" placeholder="Enter your telephone number" maxlength="15" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">`,
+      allAttrChange: `<input name="contact" class="contact-input" data-field="phone" type="tel" placeholder="Phone (000-000-0000)" maxlength="12" required>`,
+      tagChange: `<textarea id="phoneInput" class="phone-input" placeholder="Enter your telephone number"></textarea>`,
+    };
+
+    class RobustInput extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.render('original');
+      }
+      render(state) {
+        this.shadow.innerHTML = `
+          <style>
+            input, textarea {
+              padding: 12px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+              font-size: 16px;
+              width: 100%;
+              max-width: 300px;
+              box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+              transition: border-color 0.3s ease;
+            }
+            input:focus, textarea:focus {
+              border-color: #007bff;
+              outline: none;
+            }
+            div.wrapper {
+              padding: 10px;
+              background: #f9f9f9;
+              border-radius: 5px;
+            }
+          </style>
+          ${inputTemplates[state]}
+        `;
+      }
+    }
+    customElements.define('robust-input', RobustInput);
+
+    // Outer Nested Input Component
+    class RobustNestedInput extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.shadow.innerHTML = `<robust-input></robust-input>`;
+      }
+      render(state) {
+        this.shadow.querySelector('robust-input').render(state);
+      }
+    }
+    customElements.define('robust-nested-input', RobustNestedInput);
+
+    // Inner RobustButton Component
+    const buttonTemplates = {
+      original: `<button id="submitBtn" class="action-btn" data-action="submit" type="button">Submit Form</button>`,
+      singleAttrChange: `<button id="btn-submit" class="action-btn" data-action="submit" type="button">Submit Form</button>`,
+      multiAttrChange: `<button id="submitButton" class="submit-btn" data-action="submit" type="button">Submit Form</button>`,
+      attr50PercentChange: `<button id="submitButton" class="submit-btn primary-action" data-action="submit" type="button" title="Save data">Save Data</button>`,
+      allAttrChange: `<button name="formAction" class="btn save-action" data-type="primary" type="submit" title="Save your data">Save</button>`,
+      tagChange: `<div id="submitButton" class="action-btn" role="button" tabindex="0">Submit Form</div>`,
+      tagRemove: `<p class="btn-removed">Button Removed</p>`
+    };
+
+    class RobustButton extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.render('original');
+      }
+      render(state) {
+        this.shadow.innerHTML = `
+          <style>
+            button, [role="button"] {
+              padding: 12px 24px;
+              background: #007bff;
+              color: #fff;
+              border: none;
+              border-radius: 8px;
+              font-size: 16px;
+              cursor: pointer;
+              box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+              transition: transform 0.2s ease, background 0.3s ease;
+            }
+            button:hover, [role="button"]:hover {
+              transform: translateY(-2px);
+              background: #0056b3;
+            }
+            .btn-removed {
+              padding: 12px;
+              background: #f8d7da;
+              color: #721c24;
+              border-radius: 8px;
+              text-align: center;
+            }
+          </style>
+          ${buttonTemplates[state]}
+        `;
+      }
+    }
+    customElements.define('robust-button', RobustButton);
+
+    // Outer Nested Button Component
+    class RobustNestedButton extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.shadow.innerHTML = `<robust-button></robust-button>`;
+      }
+      render(state) {
+        this.shadow.querySelector('robust-button').render(state);
+      }
+    }
+    customElements.define('robust-nested-button', RobustNestedButton);
+
+    // Inner RobustTextarea Component
+    const textareaTemplates = {
+      original: `<textarea id="commentArea" class="text-area" data-type="comment" rows="4" placeholder="Enter your comment"></textarea>`,
+      singleAttrChange: `<textarea id="commentBox" class="text-area" data-type="comment" rows="4" placeholder="Enter your comment"></textarea>`,
+      multiAttrChange: `<textarea id="commentBox" class="comment-area" data-type="comment" rows="4" placeholder="Enter your comment"></textarea>`,
+      attr50PercentChange: `<textarea id="commentBox" class="comment-area feedback-input" data-type="comment"data-role="user-input" cols="40" rows="4" placeholder="Please provide your feedback" maxlength="500"></textarea>`,
+      allAttrChange: `<textarea name="feedbackText" class="feedback-field" data-section="comments" cols="50" rows="5" placeholder="Share your thoughts" maxlength="1000" required></textarea>`,
+      tagChange: `<div id="commentBox" class="text-area" contenteditable="true" role="textbox">Enter your comment here</div>`,
+      tagRemove: `<p class="textarea-removed">Textarea Removed</p>`
+    };
+
+    class RobustTextarea extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.render('original');
+      }
+      render(state) {
+        this.shadow.innerHTML = `
+          <style>
+            textarea, [contenteditable="true"] {
+              padding: 12px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+              font-size: 16px;
+              width: 100%;
+              max-width: 300px;
+              height: 100px;
+              box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+              transition: border-color 0.3s ease;
+            }
+            textarea:focus, [contenteditable="true"]:focus {
+              border-color: #007bff;
+              outline: none;
+            }
+            .textarea-removed {
+              padding: 12px;
+              background: #f8d7da;
+              color: #721c24;
+              border-radius: 8px;
+              text-align: center;
+            }
+          </style>
+          ${textareaTemplates[state]}
+        `;
+      }
+    }
+    customElements.define('robust-textarea', RobustTextarea);
+
+    // Outer Nested Textarea Component
+    class RobustNestedTextarea extends HTMLElement {
+      constructor() {
+        super();
+        this.shadow = this.attachShadow({ mode: 'open' });
+        this.shadow.innerHTML = `<robust-textarea></robust-textarea>`;
+      }
+      render(state) {
+        this.shadow.querySelector('robust-textarea').render(state);
+      }
+    }
+    customElements.define('robust-nested-textarea', RobustNestedTextarea);
+
+    // Update Functions
+    function updateNestedInput(state) {
+      document.querySelector('robust-nested-input').render(state);
+    }
+    function updateNestedButton(state) {
+      document.querySelector('robust-nested-button').render(state);
+    }
+    function updateNestedTextarea(state) {
+      document.querySelector('robust-nested-textarea').render(state);
+    }
+  </script>
+</body>
+
+</html>

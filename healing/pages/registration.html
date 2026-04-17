@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Register for the AI in Testing event.">
+    <title>AI in Testing - Registration Form</title>
+    <link rel="stylesheet" href="../css/registration.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Dropdown to change DOM structure -->
+        <div class="dropdown-container">
+            <select id="domDropdown" onchange="toggleView()">
+                <option value="original">Original</option>
+                <option value="modified">Modified</option>
+                <option value="ai-modified">AI</option>
+            </select>
+        </div>
+
+        <h1>Registration Form</h1>
+        <form id="registration-form" data-qa="registration-form" aria-labelledby="registrationFormTitle" action="/submit-registration" method="POST">
+
+            <!-- Full Name Field -->
+            <div class="form-group parent-container" data-test-id="parent-fullname">
+                <label for="name" data-testid="label-name">Full Name:</label>
+                <input type="text" id="name" name="fullName" data-qa="input-name" placeholder="Enter your full name" aria-required="true" />
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group sibling-container" data-testid="email-parent">
+                <label for="email" data-testid="label-email">Email Address:</label>
+                <input type="email" id="emailid" name="email" data-cy="input-email" placeholder="Enter your email" autocomplete="email" aria-required="true" />
+            </div>
+
+            <!-- Date of Birth Field -->
+            <div class="form-group parent-container" data-testid="parent-dob">
+                <label for="dob" data-testid="label-dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" data-test-id="input-dob" aria-required="true" />
+            </div>
+
+            <!-- Gender Field -->
+            <div class="form-group sibling-container" data-testid="gender-parent">
+                <label for="gender" data-testid="label-gender">Gender:</label>
+                <select id="gender" name="gender" data-ti="input-gender" aria-required="true">
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="male" data-test-id="gender-male">Male</option>
+                    <option value="female" data-test="gender-female">Female</option>
+                    <option value="other" data-qa="gender-other">Other</option>
+                </select>
+            </div>
+
+            <!-- Phone Number Field -->
+            <div class="form-group" data-test-id="parent-phone">
+                <label for="phone" data-testid="label-phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone" data-test="input-phone" placeholder="Enter your phone number" aria-required="true" pattern="^\d{10}$" title="Phone number should be 10 digits" maxlength="10" minlength="10" />
+            </div>
+
+            <!-- Organization Field -->
+            <div class="form-group sibling-container" data-qa="organization-parent">
+                <label for="organization" data-testid="label-organization">Organization:</label>
+                <input type="text" id="organization" name="organization" placeholder="Enter your organization" data-ti="input-organization" />
+            </div>
+
+            <!-- Job Title -->
+            <div class="form-group" data-test-id="job-parent">
+                <label for="job" data-testid="label-job">Job Title:</label>
+                <input type="text" id="job" name="jobTitle" placeholder="Enter your job title" data-qa="input-job" />
+            </div>
+
+            <!-- LinkedIn Profile -->
+            <div class="form-group" data-test-id="parent-linkedin">
+                <label for="linkedin" data-testid="label-linkedin">LinkedIn Profile (Optional):</label>
+                <input type="url" id="linkedin" name="linkedin" data-cy="input-linkedin" placeholder="https://linkedin.com/in/your-profile" />
+            </div>
+
+            <!-- Areas of Interest (Checkboxes Side by Side) -->
+            <div class="form-group" data-testid="interest-parent">
+                <label for="interests" data-qa="label-interests">Areas of Interest:</label>
+                <div class="checkbox-group">
+                    <div>
+                        <input type="checkbox" id="ai-ml" name="interest" value="AI/ML" data-testid="interest-aiml" />
+                        <label for="ai-ml">AI/ML</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="automation" name="interest" value="Automation" data-qa="interest-automation" />
+                        <label for="automation">Automation</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="security" name="interest" value="Security" data-test-id="interest-security" />
+                        <label for="security">Security</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="performance" name="interest" value="Performance" data-testid="interest-performance" />
+                        <label for="performance">Performance</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Submit Registration" />
+            </div>
+        </form>
+    </div>
+
+    <script src="../scripts/registration.js"></script>
+</body>
+</html>

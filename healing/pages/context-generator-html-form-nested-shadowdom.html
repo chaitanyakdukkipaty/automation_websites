@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow DOM Form</title>
+    <style>
+        /* Some basic styles for the page */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #form-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 80%;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Shadow DOM Form Example</h1>
+
+    <div id="form-container" customattr="my custom attr"></div>
+
+    <script>
+        const container = document.getElementById('form-container');
+        const shadowRoot = container.attachShadow({mode: 'open'});
+        const wrapper = document.createElement('div');
+        wrapper.id = 'form-wrapper';
+        shadowRoot.appendChild(wrapper);
+        const innerShadowRoot = wrapper.attachShadow({mode: 'open'});
+
+        const formHTML = `
+        <form name="userForm" id="userForm" autocomplete="on" role="form" aria-labelledby="formTitle">
+            <h2 id="formTitle" style="font-weight: bold; font-style: italic;">User Registration Form</h2>
+
+            <div class="form-group" role="group" aria-labelledby="usernameLabel">
+                <label for="username" id="usernameLabel" style="font-weight: bold;">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter Username" required maxlength="20" minlength="3" pattern="[a-zA-Z0-9]+" title="Only alphanumeric characters are allowed" data-testid="usernameInput" data-test="username" autocomplete="username" aria-placeholder="Username input field" tabindex="0" />
+            </div>
+
+            <div class="form-group" role="group" aria-labelledby="emailLabel">
+                <label for="email" id="emailLabel" style="font-weight: bold;">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter Email" required autocomplete="email" data-testid="emailInput" aria-placeholder="Email input field" tabindex="0" />
+            </div>
+
+            <hr />
+
+            <div class="form-group" role="group" aria-labelledby="inputRobustLabel">
+                <label for="single attribute change" id="inputRobustLabel" style="font-weight: bold;">Robust Input - Passing Scenarios</label>
+                <input type="number" id="input-passing-scenarios-robust" name="input-passing-scenarios-robust" placeholder="Enter Random Number between 18-100" required min="18" max="100" title="Must be between 18-100" aria-placeholder="Input field for passing scenarios" data-cy="robustInputPassing" tabindex="0" />
+            </div>
+
+            <div class="form-group" role="group" aria-labelledby="inputFailingLabel">
+                <label for="multiple-attribute-robust" id="inputFailingLabel" style="font-weight: bold;">Robust Input - Failing Scenarios</label>
+                <input type="number" id="input-failing-scenarios-robust" name="input-failing-scenarios-robust" placeholder="Enter Random Number between 18-100" required min="18" max="100" title="Must be between 18-100" data-test-id="failingInput" tabindex="0" />
+            </div>
+
+            <hr />
+
+            <div class="button-container" role="group" aria-labelledby="buttonGroupLabel">
+                <label id="buttonGroupLabel" style="font-weight: bold;">Action Buttons</label>
+                <button type="button" id="button-passing-scenarios" class="btn" data-action="action1" data-state="active" aria-label="Button 1" data-ti="passingButton" data-qa="button-passing-scenarios" tabindex="0">Button Passing Scenarios</button>
+                <button type="button" id="button-failing-scenarios" class="btn" data-action="action2" data-state="inactive" aria-label="Button 2" disabled data-test="failingButton" tabindex="-1">Button Failing Scenarios</button>
+            </div>
+
+            <br />
+            <hr />
+
+            <div class="form-group" role="group" aria-labelledby="textAreaRobustLabel">
+                <label for="textarea-robust-passing-textarea" id="textAreaRobustLabel" style="font-weight: bold;">Robust TextArea - Passing Scenarios</label>
+                <textarea
+                    id="textarea-robust-passing-textarea"
+                    name="textarea-robust-passing-textarea"
+                    placeholder="Enter Random Number between 18-100"
+                    required
+                    minlength="2"
+                    maxlength="3"
+                    title="Must be between 18-100"
+                    rows="2"
+                    cols="20"
+                    data-testid="textareaRobustPassing"
+                    aria-placeholder="Text area for passing scenarios"
+                    autocomplete="off"
+                    contenteditable="true"
+                    tabindex="0"
+                ></textarea>
+            </div>
+
+            <div class="form-group" role="group" aria-labelledby="textAreaFailingLabel">
+                <label for="textarea-robust-failing-textarea" id="textAreaFailingLabel" style="font-weight: bold;">Robust TextArea - Failing Scenarios</label>
+                <textarea
+                    id="textarea-robust-failing-textarea"
+                    name="textarea-robust-failing-textarea"
+                    placeholder="Enter Random Number between 18-100"
+                    required
+                    minlength="2"
+                    maxlength="3"
+                    title="Must be between 18-100"
+                    rows="2"
+                    cols="20"
+                    data-testid="textareaRobustFailing"
+                    aria-placeholder="Text area for failing scenarios"
+                    autocomplete="off"
+                    contenteditable="true"
+                    tabindex="0"
+                ></textarea>
+            </div>
+
+            <hr />
+
+            <div class="form-group" role="group" aria-labelledby="weekdaysLabel">
+                <label for="weekdays" id="weekdaysLabel" style="font-weight: bold;">Weekdays</label>
+                <select id="weekdays" name="weekdays" data-test="weekdaysSelect" role="combobox" tabindex="0">
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                    <option value="saturday">Saturday</option>
+                    <option value="sunday">Sunday</option>
+                </select>
+            </div>
+
+            <div class="form-group" role="group" aria-labelledby="monthLabel">
+                <label for="month" id="monthLabel" style="font-weight: bold;">Month:</label>
+                <select id="month" name="month" multiple onchange="addSelection('month', 'month-container')" data-test-id="monthSelect" role="listbox" tabindex="0">
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+            </div>
+
+            <div class="selected-items" id="month-container" aria-live="polite"></div>
+
+            <hr />
+
+            <fieldset id="educationalInfo" name="educationalInfo" role="region" aria-labelledby="educationalInfoLabel">
+                <legend id="educationalInfoLabel" style="font-weight: bold;">Educational Information</legend>
+
+                <label for="degree">Degree:</label>
+                <input type="text" id="degree" name="degree" required data-test="degreeInput" autocomplete="degree" aria-placeholder="Enter your degree" maxlength="50" tabindex="0" />
+
+                <label for="yearOfGraduation">Year Of Graduation:</label>
+                <input type="number" id="yearOfGraduation" name="yearOfGraduation" min="1900" max="2100" required data-test-id="yearOfGraduationInput" tabindex="0" />
+            </fieldset>
+
+            <hr />
+
+            <div class="form-group" role="group" aria-labelledby="countryDatalistLabel">
+                <label for="countryDatalist" id="countryDatalistLabel" style="font-weight: bold;">Country:</label>
+                <input list="countries" id="countryDatalist" name="countryDatalist" data-testid="countryDatalistInput" autocomplete="country" placeholder="Select a country" tabindex="0" />
+                <datalist id="countriesDatalist" name="countriesDatalist">
+                    <option value="United States"> </option>
+                    <option value="Canada"> </option>
+                    <option value="United Kingdom"> </option>
+                    <option value="Australia"> </option>
+                    <option value="Germany"> </option>
+                    <option value="France"> </option>
+                </datalist>
+            </div>
+
+            <hr />
+
+            <div class="form-group" role="group" aria-labelledby="hobbiesLabel">
+                <legend id="hobbiesLabel" style="font-weight: bold;">Hobbies</legend>
+                <br />
+                <input type="checkbox" name="hobbies" value="reading" data-test="hobbyReading" aria-label="Reading hobby" tabindex="0" /> <label>Reading</label><br />
+                <input type="checkbox" name="hobbies" value="sports" data-test="hobbySports" aria-label="Sports hobby" tabindex="0" /> <label>Sports</label><br />
+                <input type="checkbox" name="hobbies" value="music" data-test="hobbyMusic" aria-label="Music hobby" tabindex="0" /> <label>Music</label><br />
+                <input type="checkbox" name="hobbies" value="traveling" data-test="hobbyTraveling" aria-label="Traveling hobby" tabindex="0" /> <label>Traveling</label><br />
+            </div>
+
+            <hr />
+
+            <div class="form-group" role="group" aria-labelledby="genderLabel">
+                <legend id="genderLabel" style="font-weight: bold;">Gender</legend>
+                <label> <input type="radio" name="gender" value="male" data-cy="genderMale" /> Male </label><br />
+                <label> <input type="radio" name="gender" value="female" data-cy="genderFemale" /> Female </label><br />
+            </div>
+
+            <hr />
+
+            <div class="form-group" role="group" aria-labelledby="countryLabel">
+                <label for="country" id="countryLabel" style="font-weight: bold;">Select Country:</label>
+                <select id="country" name="country" data-test="countrySelect" role="combobox" tabindex="0">
+                    <option value="">--Select Country--</option>
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="IN">India</option>
+                </select>
+
+                <div id="state-container" role="group" aria-labelledby="stateLabel" style="margin-top: 10px;">
+                    <label for="state" id="stateLabel">Select State:</label>
+                    <select id="state" name="state" data-test="stateSelect" role="combobox" tabindex="0">
+                        <option value="">--Select State--</option>
+                    </select>
+                </div>
+            </div>
+
+            <li id="counter" role="list" aria-labelledby="counterlabel">
+                    <label>Counter : </label>
+                    <ul>one</ul>
+                    <ul>two</ul>
+                    <ol>three</ol>
+                </li>
+                
+                <div class="slidecontainer" role="group">
+                    <label for="myRange">Range Slider</label>
+                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange" aria-labelledby="slider">
+                </div>
+
+                
+                <table id="mytable" role="table" aria-labelledby="tablearea" class="table">
+                    <tr>
+                      <th>Company</th>
+                      <th>Contact</th>
+                      <th>Country</th>
+                    </tr>
+                    <tr>
+                      <td>Alfreds Futterkiste</td>
+                      <td>Maria Anders</td>
+                      <td>Germany</td>
+                    </tr>
+                    <tr>
+                      <td>Centro comercial Moctezuma</td>
+                      <td>Francisco Chang</td>
+                      <td>Mexico</td>
+                    </tr>
+                  </table>
+                <br />
+
+            <div class="form-group">
+                <input type="submit" id="loginButton" name="loginButton" value="Submit" data-qa="submitButton" formaction="/submit" formmethod="POST" data-ti="submitFormButton" data-testid="submitButton" aria-label="Submit the form" tabindex="0" />
+            </div>
+        </form>
+        `;
+
+        innerShadowRoot.innerHTML = formHTML;
+    </script>
+
+</body>
+</html>

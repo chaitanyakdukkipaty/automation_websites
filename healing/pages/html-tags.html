@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🩹 Robust Locator Healing 🩹</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 40px;
+            color: #4267B2;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin: 0 auto;
+            max-height: fit-content;
+            overflow-y: auto;
+        }
+
+        .component-box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+        }
+
+        .component-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        [class*="Dropdown"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #fafafa;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: calc(100% - 20px);
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group button {
+            width: 60%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 0 auto;
+            /* Center the button */
+            display: block;
+            /* Ensure the button respects the margin */
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group select[multiple] {
+            height: 100px;
+        }
+
+        fieldset {
+            border: 2px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 13px;
+            padding: 0 4px;
+        }
+
+        .tooltip {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🩹 Robust Locator Healing 🩹</h1>
+    <div class="container">
+        <!-- Component: Login Form Basics -->
+        <div class="component-box">
+            <div class="component-header">Login Form Basics</div>
+            <select class="stateDropdown" onchange="updateComponent('loginForm', this.value)">
+                <option value="Original" title="Default state with all original attributes">Original</option>
+                <option value="Modified" title="Minor attribute changes for robust healing">Modified</option>
+                <option value="For AI Healing" title="Major changes (>50% attributes) for AI healing">For AI Healing
+                </option>
+            </select>
+            <div id="loginFormComponent"></div>
+        </div>
+
+        <!-- Component: Input Scenarios -->
+        <div class="component-box">
+            <div class="component-header">Input Scenarios</div>
+            <select class="inputDropdown" onchange="updateComponent('input', this.value)">
+                <option value="Original" title="Default state with all original attributes">Original</option>
+                <option value="Single Attribute Change" title="Removes id attribute (<50% change)">Robust Input Single
+                    Attribute Change</option>
+                <option value="Multiple Attribute Change" title="Changes 4 attributes (<50% change)">Robust Input
+                    Multiple Attribute Change</option>
+                <option value="Tag Change" title="Changes tag to textarea (triggers robust healing)">Robust Input Tag
+                    Change</option>
+                <option value="Multiple Attribute Change > 50%" title="Changes 5 attributes (>50% change)">Robust Input
+                    Fail
+                    Multiple Attribute Change</option>
+                <option value="All Attribute Change" title="Removes all attributes except placeholder">Robust Input Fail
+                    All Attribute Change</option>
+                <option value="Tag Removed" title="Removes the input element entirely">Robust Input Fail Tag Removed
+                </option>
+                <option value="Label Changes" title="Removes the input element entirely">Robust Label With Same Value
+                    But All Attribute Change</option>
+            </select>
+            <div id="inputComponent"></div>
+        </div>
+
+        <!-- Component: Button Scenarios -->
+        <div class="component-box">
+            <div class="component-header">Button Scenarios</div>
+            <select class="buttonDropdown" onchange="updateComponent('button', this.value)">
+                <option value="Original" title="Default state with all original attributes">Original</option>
+                <option value="Single Attribute Change" title="Removes id attribute (<50% change)">Robust Button Single
+                    Attribute Change</option>
+                <option value="Multiple Attribute Change" title="Changes 2 attributes (<50% change)">Robust Button
+                    Multiple Attribute Change</option>
+                <option value="Tag Change" title="Changes to input type=submit">Robust Button Tag Change</option>
+                <option value="Multiple Attribute Change > 50%" title="Changes 4 attributes (>50% change)">Robust Button
+                    Fail
+                    Multiple Attribute Change</option>
+                <option value="All Attribute Change" title="Removes all attributes except text">Robust Button Fail All
+                    Attribute Change</option>
+                <option value="Tag Removed" title="Removes the button element entirely">Robust Button Fail Tag Removed
+                </option>
+            </select>
+            <div id="buttonComponent"></div>
+        </div>
+
+        <!-- Component: TextArea Scenarios -->
+        <div class="component-box">
+            <div class="component-header">TextArea Scenarios</div>
+            <select class="textareaDropdown" onchange="updateComponent('textarea', this.value)">
+                <option value="Original" title="Default state with all original attributes">Original</option>
+                <option value="Single Attribute Change" title="Removes id attribute (<50% change)">Robust Textarea
+                    Single
+                    Attribute Change</option>
+                <option value="Multiple Attribute Change" title="Changes 3 attributes (<50% change)">Robust Textarea
+                    Multiple Attribute Change</option>
+                <option value="Tag Change" title="Changes to input type=text">Robust Textarea Tag Change</option>
+                <option value="Multiple Attribute Change > 50%" title="Changes 5 attributes (>50% change)">Robust
+                    Textarea
+                    Fail Multiple Attribute Change</option>
+                <option value="All Attribute Change" title="Removes all attributes except placeholder">Robust Textarea
+                    Fail All Attribute Change</option>
+                <option value="Tag Removed" title="Removes the textarea element entirely">Robust Textarea Fail Tag
+                    Removed</option>
+            </select>
+            <div id="textareaComponent"></div>
+        </div>
+
+        <!-- Component: Single Select -->
+        <div class="component-box">
+            <div class="component-header">Single Select</div>
+            <select class="singleSelectDropdown" onchange="updateComponent('singleSelect', this.value)">
+                <option value="Original" title="Default state with all original attributes">Original</option>
+                <option value="Sibling Attribute Change" title="Modifies sibling label attributes (<50% change)">Robust
+                    Select Single Value Sibling Attribute Change</option>
+                <option value="Tag Changed" title="Changes select to ul (triggers AI healing)">Robust Select Single
+                    Value Fail Tag Changed</option>
+            </select>
+            <div id="singleSelectComponent"></div>
+        </div>
+
+        <!-- Component: Multiple Select -->
+        <div class="component-box">
+            <div class="component-header">Multiple Select</div>
+            <select class="multipleSelectDropdown" onchange="updateComponent('multipleSelect', this.value)">
+                <option value="Original" title="Default state with all original attributes">Original</option>
+                <option value="Sibling Attribute Change" title="Modifies sibling label attributes (<50% change)">Robust
+                    Select Multiple Value Sibling Attribute Change</option>
+                <option value="Tag Removed" title="Removes the select element (triggers AI healing)">Robust Select
+                    Multiple Value Fail Tag Removed</option>
+            </select>
+            <div id="multipleSelectComponent"></div>
+        </div>
+
+        <!-- Component: Fieldset -->
+        <div class="component-box">
+            <div class="component-header">Fieldset</div>
+            <select class="fieldsetDropdown" onchange="updateComponent('fieldset', this.value)">
+                <option value="Original" title="Default state with all original attributes">Original</option>
+                <option value="Single Attribute Change" title="Removes one child input (<50% change)">Robust FieldSet
+                    Single Attribute Change</option>
+            </select>
+            <div id="fieldsetComponent"></div>
+        </div>
+
+        <!-- Component: Datalist -->
+        <div class="component-box">
+            <div class="component-header">Datalist</div>
+            <select class="datalistDropdown" onchange="updateComponent('datalist', this.value)">
+                <option value="Original" title="Default state with all original attributes">Original</option>
+                <option value="Single Attribute Change" title="Removes id attribute (<50% change)">Robust DataList
+                    Single Attribute Change</option>
+            </select>
+            <div id="datalistComponent"></div>
+        </div>
+
+        <!-- Component: Checkboxes -->
+        <div class="component-box">
+            <div class="component-header">Hobbies Checkboxes</div>
+            <select class="checkboxDropdown" onchange="updateComponent('checkbox', this.value)">
+                <option value="Original" title="Default state with checkboxes outside labels">Original</option>
+                <option value="Moved to Child" title="Moves checkboxes inside labels (<50% change)">Robust Checkboxes
+                    Moved to Child</option>
+            </select>
+            <div id="checkboxComponent"></div>
+        </div>
+
+        <!-- Component: Radio Buttons -->
+        <div class="component-box">
+            <div class="component-header">Gender Radio Buttons</div>
+            <select class="radioButtonDropdown" onchange="updateComponent('radioButton', this.value)">
+                <option value="Original" title="Default state with radios inside labels">Original</option>
+                <option value="Moved to Parent" title="Moves radios outside labels (<50% change)">Robust RadioGroups
+                    Moved to Parent</option>
+            </select>
+            <div id="radioButtonComponent"></div>
+        </div>
+
+        <!-- Component: Country-State Select -->
+        <div class="component-box">
+            <div class="component-header">Country-State Select</div>
+            <select class="countryStateDropdown"
+                onchange="updateComponent('countryState', this.value); initCountryState();">
+                <option value="Original" title="Default state with all original attributes">Original</option>
+                <option value="State Select Attribute Change" title="Removes state select id (<50% change)">State Select
+                    Attribute Change</option>
+            </select>
+            <div id="countryStateComponent"></div>
+        </div>
+    </div>
+
+    <script>
+        const components = {
+            loginForm: {
+                Original: `
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter Username" required maxlength="20" pattern="[a-zA-Z0-9]+" title="Only alphanumeric characters" data-test="username" aria-label="Username input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter Email" required data-test="email" aria-required="true" />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="loginButton" name="loginButton" data-action="submit" aria-label="Login button">Login</button>
+                    </div>
+                `,
+                Modified: `
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" placeholder="Modified Username" class="modified-input" maxlength="20" pattern="[a-zA-Z0-9]+" title="Only alphanumeric characters" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" placeholder="Modified Email" class="modified-input" required />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="modified-button" name="loginButton">Login</button>
+                    </div>
+                `,
+                'For AI Healing': `
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input name="ai_username" data-test="ai-username" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input name="ai_email" data-test="ai-email" />
+                    </div>
+                    <div class="form-group">
+                        <button name="ai_loginButton" data-action="ai-submit">AI Healing Login</button>
+                    </div>
+                `
+            },
+            input: {
+                Original: `
+                    <div class="form-group">
+                        <label for="input-passing-scenarios-robust" id="label" class="labelClass" data-test-id="label">Robust Input - Passing Scenarios</label>
+                        <input type="number" id="input-passing-scenarios-robust" name="input-passing-scenarios-robust" placeholder="Enter Random Number between 18-100" required min="18" max="100" title="Must be between 18-100" aria-placeholder="Input field based on accessibility" data-test="input-passing" style="font-size: 14px;" />
+                    </div>
+                `,
+                'Single Attribute Change': `
+                    <div class="form-group">
+                        <label for="input-passing-scenarios-robust" id="label" class="labelClass" data-test-id="label">Robust Input - Passing Scenarios</label>
+                        <input type="number" id="modified-input-id" name="input-passing-scenarios-robust" placeholder="Enter Random Number between 18-100" required min="18" max="100" title="Must be between 18-100" aria-placeholder="Input field based on accessibility" data-test="input-passing" style="font-size: 14px;" />
+                    </div>
+                `,
+                'Multiple Attribute Change': `
+                    <div class="form-group">
+                        <label for="input-passing-scenarios-robust" id="label" class="labelClass" data-test-id="label">Robust Input - Passing Scenarios</label>
+                        <input type="number" name="modified-name" placeholder="Modified Placeholder" required min="20" max="90" title="Modified Title" aria-placeholder="Input field based on accessibility" data-test="input-passing" style="font-size: 14px;" />
+                    </div>
+                `,
+                'Tag Change': `
+                    <div class="form-group">
+                        <label for="input-passing-scenarios-robust" id="label" class="labelClass" data-test-id="label">Robust Input - Passing Scenarios</label>
+                        <textarea name="input-passing-scenarios-robust" placeholder="Enter Random Number between 18-100" required title="Must be between 18-100" rows="2" cols="20" data-test="input-passing" style="font-size: 14px;"></textarea>
+                    </div>
+                `,
+                'Multiple Attribute Change > 50%': `
+                    <div class="form-group">
+                        <label for="input-failing-scenarios-robust">Robust Input - Failing Scenarios</label>
+                        <input type="text" name="fail-name" placeholder="Fail Placeholder" max="100" title="Fail Title" data-test="input-failing" style="font-size: 14px;" />
+                    </div>
+                `,
+                'All Attribute Change': `
+                    <div class="form-group">
+                        <label for="input-failing-scenarios-robust">Robust Input - Failing Scenarios</label>
+                        <input placeholder="All attributes changed" />
+                    </div>
+                `,
+                'Tag Removed': `
+                    <div class="form-group">
+                        <label for="input-failing-scenarios-robust">Robust Input - Failing Scenarios</label>
+                    </div>
+                `,
+                'Label Changes': `
+                    <div class="form-group">
+                        <label for="modified" id="label" class="labelClass" data-test-id="label">Robust Label</label>
+                        <input type="number" id="input-passing-scenarios-robust" name="input-passing-scenarios-robust" placeholder="Enter Random Number between 18-100" required min="18" max="100" title="Must be between 18-100" aria-placeholder="Input field based on accessibility" data-test="input-passing" style="font-size: 14px;" />
+                    </div>
+                `
+            },
+            button: {
+                Original: `
+                    <div class="form-group">
+                        <button type="button" id="button-passing-scenarios" name="button-passing" data-action="action1" data-state="active" aria-label="Button">Button</button>
+                    </div>
+                `,
+                'Single Attribute Change': `
+                    <div class="form-group">
+                        <button type="button" id="modified-button-id" name="button-passing" data-action="action1" data-state="active" aria-label="Button">Button</button>
+                    </div>
+                `,
+                'Multiple Attribute Change': `
+                    <div class="form-group">
+                        <button type="button" name="modified-button" data-action="modified-action" data-state="active" aria-label="Button">Button</button>
+                    </div>
+                `,
+                'Tag Change': `
+                    <div class="form-group">
+                        <input type="submit" name="button-passing" value="Button Passing Scenarios" data-action="action1" aria-label="Button Tag Change"/>
+                    </div>
+                `,
+                'Multiple Attribute Change > 50%': `
+                    <div class="form-group">
+                        <button name="fail-button" data-action="fail-action" aria-label="Button Failing" >Button Multiple Changes</button>
+                    </div>
+                `,
+                'All Attribute Change': `
+                    <div class="form-group">
+                        <button>Button All Attributes Changed</button>
+                    </div>
+                `,
+                'Tag Removed': `
+                    <div class="form-group"></div>
+                `
+            },
+            textarea: {
+                Original: `
+                    <div class="form-group">
+                        <label for="textarea-robust-passing-textarea">Robust TextArea - Passing Scenarios</label>
+                        <textarea id="textarea-robust-passing-textarea" name="textarea-robust-passing" placeholder="Enter Random Number between 18-100" required minlength="2" maxlength="3" title="Must be between 18-100" rows="2" cols="20" data-test="textarea-passing" style="font-size: 14px;"></textarea>
+                    </div>
+                `,
+                'Single Attribute Change': `
+                    <div class="form-group">
+                        <label for="textarea-robust-passing-textarea">Robust TextArea - Passing Scenarios</label>
+                        <textarea id="modified-textarea-id" name="textarea-robust-passing" placeholder="Enter Random Number between 18-100" required minlength="2" maxlength="3" title="Must be between 18-100" rows="2" cols="20" data-test="textarea-passing" style="font-size: 14px;"></textarea>
+                    </div>
+                `,
+                'Multiple Attribute Change': `
+                    <div class="form-group">
+                        <label for="textarea-robust-passing-textarea">Robust TextArea - Passing Scenarios</label>
+                        <textarea name="modified-textarea" placeholder="Modified Placeholder" required minlength="1" title="Modified Title" rows="2" cols="20" data-test="textarea-passing" style="font-size: 14px;"></textarea>
+                    </div>
+                `,
+                'Tag Change': `
+                    <div class="form-group">
+                        <label for="textarea-robust-passing-textarea">Robust TextArea - Passing Scenarios</label>
+                        <input type="text" name="textarea-robust-passing" placeholder="Enter Random Number between 18-100" required title="Must be between 18-100" data-test="textarea-passing" style="font-size: 14px;" />
+                    </div>
+                `,
+                'Multiple Attribute Change > 50%': `
+                    <div class="form-group">
+                        <label for="textarea-robust-failing-textarea">Robust TextArea - Failing Scenarios</label>
+                        <textarea name="fail-textarea" placeholder="Fail Placeholder" title="Fail Title" rows="3" cols="25" data-test="textarea-failing" style="font-size: 14px;"></textarea>
+                    </div>
+                `,
+                'All Attribute Change': `
+                    <div class="form-group">
+                        <label for="textarea-robust-failing-textarea">Robust TextArea - Failing Scenarios</label>
+                        <textarea placeholder="All attributes changed"></textarea>
+                    </div>
+                `,
+                'Tag Removed': `
+                    <div class="form-group">
+                        <label for="textarea-robust-failing-textarea">Robust TextArea - Failing Scenarios</label>
+                    </div>
+                `
+            },
+            singleSelect: {
+                Original: `
+                    <div class="form-group">
+                        <label for="weekdays">Weekdays</label>
+                        <select id="weekdays" name="weekdays" data-test="single-select" aria-label="Select weekday">
+                            <option value="monday">Monday</option>
+                            <option value="tuesday">Tuesday</option>
+                            <option value="wednesday">Wednesday</option>
+                            <option value="thursday">Thursday</option>
+                            <option value="friday">Friday</option>
+                            <option value="saturday">Saturday</option>
+                            <option value="sunday">Sunday</option>
+                        </select>
+                    </div>
+                `,
+                'Sibling Attribute Change': `
+                    <div class="form-group">
+                        <label for="new-weekdays" class="new-class" id="new-id" style="color: red; font-size: 18px;" data-test="modified-label">Sibling Changed Label</label>
+                        <select id="new-weekdays" name="weekdays" data-test="single-select" aria-label="Select weekday">
+                            <option value="monday">Monday</option>
+                            <option value="tuesday">Tuesday</option>
+                            <option value="wednesday">Wednesday</option>
+                            <option value="thursday">Thursday</option>
+                            <option value="friday">Friday</option>
+                            <option value="saturday">Saturday</option>
+                            <option value="sunday">Sunday</option>
+                        </select>
+                    </div>
+                `,
+                'Tag Changed': `
+                    <div class="form-group">
+                        <label for="weekdays">Weekdays</label>
+                        <ul id="weekdays" data-test="single-select" style="list-style: none; padding: 0;">
+                            <li>Monday</li>
+                            <li>Tuesday</li>
+                            <li>Wednesday</li>
+                            <li>Thursday</li>
+                            <li>Friday</li>
+                            <li>Saturday</li>
+                            <li>Sunday</li>
+                        </ul>
+                    </div>
+                `
+            },
+            multipleSelect: {
+                Original: `
+                    <div class="form-group">
+                        <label for="month">Month</label>
+                        <select id="month" name="month" multiple data-test="multiple-select" aria-label="Select months">
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+                `,
+                'Sibling Attribute Change': `
+                    <div class="form-group">
+                        <label for="new-month" class="new-class" id="new-id" style="color: red; font-size: 18px;" data-test="modified-label">Sibling Changed Label</label>
+                        <select id="new-month" name="month" multiple data-test="multiple-select" aria-label="Select months">
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+                `,
+                'Tag Removed': `
+                    <div class="form-group">
+                        <label for="month">Month</label>
+                    </div>
+                `
+            },
+            fieldset: {
+                Original: `
+                    <div class="form-group">
+                        <fieldset id="educationalInfo" name="educationalInfo" data-test="fieldset" aria-label="Educational Information">
+                            <legend>Educational Information</legend>
+                            <label for="degree">Degree:</label>
+                            <input type="text" id="degree" name="degree" data-test="degree" />
+                            <label for="yearOfGraduation">Year Of Graduation:</label>
+                            <input type="number" id="yearOfGraduation" name="yearofgraduation" data-test="year" />
+                        </fieldset>
+                    </div>
+                `,
+                'Single Attribute Change': `
+                    <div class="form-group">
+                        <fieldset id="studentInfo" name="educationalInfo" data-test="fieldset" aria-label="Educational Information">
+                            <legend>Educational Information</legend>
+                            <label for="degree">Degree:</label>
+                            <input type="text" id="degree" name="degree" data-test="degree" />
+                            <label for="yearOfGraduation">Year Of Graduation:</label>
+                            <input type="number" id="yearOfGraduation" name="yearofgraduation" data-test="year" />
+                        </fieldset>
+                    </div>
+                `
+            },
+            datalist: {
+                Original: `
+                    <div class="form-group">
+                        <label for="countryInput">Country</label>
+                        <input type="text" id="countryInput" name="countryInput" list="countries" placeholder="Type a country" required data-test="country-input" />
+                        <datalist id="countries" data-test="datalist">
+                            <option value="United States"></option>
+                            <option value="Canada"></option>
+                            <option value="United Kingdom"></option>
+                            <option value="Australia"></option>
+                            <option value="Germany"></option>
+                            <option value="France"></option>
+                        </datalist>
+                    </div>
+                `,
+                'Single Attribute Change': `
+                    <div class="form-group">
+                        <label for="countryInput">Country</label>
+                        <input type="text" id="countryInput" name="countryInput" list="country" placeholder="Type a country" required data-test="country-input" />
+                        <datalist id="country" data-test="datalist">
+                            <option value="United States"></option>
+                            <option value="Canada"></option>
+                            <option value="United Kingdom"></option>
+                            <option value="Australia"></option>
+                            <option value="Germany"></option>
+                            <option value="France"></option>
+                        </datalist>
+                    </div>
+                `,
+            },
+            checkbox: {
+                Original: `
+                    <div class="form-group">
+                        <legend>Hobbies</legend>
+                        <input type="checkbox" name="hobbies" value="reading" id="reading" data-test="checkbox-reading" /> <label for="reading">Reading</label><br />
+                        <input type="checkbox" name="hobbies" value="sports" id="sports" data-test="checkbox-sports" /> <label for="sports">Sports</label><br />
+                        <input type="checkbox" name="hobbies" value="music" id="music" data-test="checkbox-music" /> <label for="music">Music</label><br />
+                        <input type="checkbox" name="hobbies" value="traveling" id="traveling" data-test="checkbox-traveling" /> <label for="traveling">Traveling</label><br />
+                    </div>
+                `,
+                'Moved to Child': `
+                    <div class="form-group">
+                        <legend>Hobbies</legend>
+                        <label><input type="checkbox" name="hobbies" value="reading" id="reading-child" data-test="checkbox-reading" /> Reading</label><br />
+                        <label><input type="checkbox" name="hobbies" value="sports" id="sports" data-test="checkbox-sports" /> Sports</label><br />
+                        <label><input type="checkbox" name="hobbies" value="music" id="music" data-test="checkbox-music" /> Music</label><br />
+                        <label><input type="checkbox" name="hobbies" value="traveling" id="traveling" data-test="checkbox-traveling" /> Traveling</label><br />
+                    </div>
+                `
+            },
+            radioButton: {
+                Original: `
+                    <div class="form-group">
+                        <legend>Gender</legend>
+                        <label><input type="radio" name="gender" value="male" id="male" data-test="radio-male" />Male</label><br />
+                        <label><input type="radio" name="gender" value="female" id="female" data-test="radio-female" />Female</label><br />
+                    </div>
+                `,
+                'Moved to Parent': `
+                    <div class="form-group">
+                        <legend>Gender</legend>
+                        <input type="radio" name="gender" value="male" id="male" data-test="radio-male-parent" /> <label for="male">Male</label><br />
+                        <input type="radio" name="gender" value="female" id="female" data-test="radio-female" /> <label for="female">Female</label><br />
+                    </div>
+                `
+            },
+            countryState: {
+                Original: `
+                    <div class="form-group">
+                        <label for="country">Select Country:</label>
+                        <select id="country" name="country" data-test="country-select" aria-label="Select country">
+                            <option value="">--Select Country--</option>
+                            <option value="US">United States</option>
+                            <option value="CA">Canada</option>
+                            <option value="IN">India</option>
+                        </select>
+                        <div class="form-group" id="state-container" style="display: none;">
+                            <label for="state">Select State:</label>
+                            <select id="state" name="state" data-test="state-select" aria-label="Select state">
+                                <option value="">--Select State--</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                'State Select Attribute Change': `
+                    <div class="form-group">
+                        <label for="country">Select Country:</label>
+                        <select id="country" name="country" data-test="country-select" aria-label="Select country">
+                            <option value="">--Select Country--</option>
+                            <option value="US">United States</option>
+                            <option value="CA">Canada</option>
+                            <option value="IN">India</option>
+                        </select>
+                        <div class="form-group" id="state-container" style="display: none;">
+                            <label for="state">Select State:</label>
+                            <select id="state" data-test="state-select" aria-label="Select state">
+                                <option value="">--Select State--</option>
+                            </select>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function updateComponent(componentName, state) {
+            const container = document.getElementById(componentName + 'Component');
+            container.innerHTML = components[componentName][state];
+        }
+
+        function initCountryState() {
+            const countrySelect = document.getElementById('country');
+            const stateContainer = document.getElementById('state-container');
+            const stateSelect = document.getElementById('state');
+            const states = {
+                'US': ['California', 'Texas', 'New York'],
+                'CA': ['Ontario', 'Quebec', 'British Columbia'],
+                'IN': ['Maharashtra', 'Delhi', 'Karnataka']
+            };
+
+            if (countrySelect && stateContainer && stateSelect) {
+                countrySelect.addEventListener('change', function () {
+                    const selectedCountry = countrySelect.value;
+                    stateContainer.style.display = 'none';
+                    stateSelect.innerHTML = '<option value="">--Select State--</option>';
+
+                    if (selectedCountry && states[selectedCountry]) {
+                        stateContainer.style.display = 'block';
+                        states[selectedCountry].forEach(state => {
+                            const option = document.createElement('option');
+                            option.value = state;
+                            option.textContent = state;
+                            stateSelect.appendChild(option);
+                        });
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const componentNames = [
+                'loginForm', 'input', 'button',
+                'textarea', 'singleSelect', 'multipleSelect', 'fieldset',
+                'datalist', 'checkbox', 'radioButton', 'countryState'
+            ];
+            componentNames.forEach(name => updateComponent(name, 'Original'));
+            initCountryState();
+        });
+    </script>
+</body>
+
+</html>

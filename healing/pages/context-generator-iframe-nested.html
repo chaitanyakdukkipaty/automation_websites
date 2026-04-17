@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nested Iframe</title>
+</head>
+<body>
+
+    <h1>First Iframe Page</h1>
+    <p>This is the content of the first iframe page.</p>
+    <iframe id="iframe1" width="1000" height="800" title ="Nested Iframe" srcdoc='
+    <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Iframe with HTML Content</title>
+        </head>
+        <body>
+        
+            <h1>Main Page Content</h1>
+            <p>This is the content of the main page.</p>
+        
+            <iframe id="iframe" width="1000" height="800" src="https://qa-live-server.bsstag.com/healing/pages/context-generator-nested-html-form.html"></iframe>
+        
+        </body>
+        </html>
+        '>
+
+    </iframe>
+
+</body>
+</html>

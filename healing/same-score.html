@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Same Score</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .parent,
+    .sibling {
+      width: 80%;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .child {
+      margin-top: 20px;
+    }
+
+    .sibling {
+      margin: 10px 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .blue {
+      background-color: blue;
+    }
+
+    .peach {
+      background-color: peachpuff;
+    }
+
+    .dropdown {
+      margin-bottom: 20px;
+    }
+  </style>
+  <script>
+    function changeColor(divId, color) {
+      const div = document.getElementById(divId);
+      div.classList.remove("blue", "peach");
+      div.classList.add(color);
+    }
+
+    function toggleView() {
+      const view = document.getElementById("viewSelector").value;
+      const container = document.getElementById("container");
+
+      if (view === "original") {
+        container.innerHTML = `
+        <h1>Same Score</h1>
+          <div class="parent">
+            <div class="child">
+              <div class="sibling" id="sibling-1">
+                <input type="text" placeholder="Input Box 1" id="targetInput1">
+                <button onclick="changeColor('targetInput1', 'blue')">Button1</button>
+              </div>
+              <div class="sibling" id="sibling-2">
+                <input type="text" placeholder="Input Box 2" id="targetInput2">
+                <button onclick="changeColor('targetInput2', 'peach')">Button2</button>
+              </div>
+              <div class="sibling" id="sibling-3">
+                <input type="text" placeholder="Input Box 3" id="targetInput3">
+                <button onclick="changeColor('targetInput3', 'peach')">Button3</button>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (view === "modified") {
+        container.innerHTML = `
+        <h1>Same Score</h1>
+          <div class="parent">
+            <div class="child">
+              <div class="sibling" id="sibling-1">
+                <input type="text" placeholder="Input Box 1" id="targetInput1">
+                <button onclick="changeColor('sibling-1', 'blue')">Button1</button>
+              </div>
+              <div class="sibling" id="sibling-2">
+                <input type="text" placeholder="Input Box 2" id="targetInput2">
+                <button onclick="changeColor('targetInput2', 'peach')">Button2</button>
+              </div>
+            </div>
+          </div>
+          <div class="sibling" id="sibling-3">
+              <input type="text" placeholder="Input Box 3" id="targetInput3">
+               <button onclick="changeColor('targetInput3', 'blue')">Button3</button>
+          </div>
+          <div class="sibling" id="sibling-3">
+            <input type="text" placeholder="Input Box 3" id="targetInput3">
+            <button onclick="changeColor('targetInput3', 'peach')">Button3</button>
+          </div>
+        `;
+      }
+    }
+    window.onload = function () {
+      toggleView(); // Call toggleView when the page loads to display the default selection
+    }
+  </script>
+</head>
+
+<body>
+  <div class="dropdown">
+    <label for="viewSelector">Select View:</label>
+    <select id="viewSelector" onchange="toggleView()">
+      <option value="original">Original</option>
+      <option value="modified">Modified</option>
+    </select>
+  </div>
+
+  <div id="container">
+    <!-- Content will be dynamically injected here based on the dropdown selection -->
+  </div>
+</body>
+
+</html>

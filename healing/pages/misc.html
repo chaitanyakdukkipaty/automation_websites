@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Components</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/misc.css">
+</head>
+
+<body>
+    <div id="navbar"></div>
+    <div class="container">
+
+        <!-- Flyout Menu -->
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="flyout-viewSelector">View:</label>
+                <select id="flyout-viewSelector" onchange="toggleFlyoutMenuView()">
+                <option value="Original">Original</option>
+                <option value="Robust Flyout Menu Custom Attribute Changes">Robust Flyout Menu Custom Attribute Changes</option>
+                <option value="Robust Nested Flyout Menu Custom Attribute Changes">Robust Nested Flyout Menu Custom Attribute Changes</option>
+                </select>
+            </div>
+
+            <div class="component">
+                <h3>Flyout Menu</h3>
+                <nav class="flyout-menu">
+                    <ul class="flyout-menu-list">
+                        <li class="flyout-item" id="main-menu">
+                          <a href="#">Menu 1</a>
+                          <ul class="flyout-submenu">
+                            <li id="submenu-1" data-menu-id="1" aria-haspopup="true" aria-expanded="false">
+                              <a href="#">Submenu 1-1</a>
+                              <ul class="flyout-submenu">
+                                <li id="sub-submenu-1" data-submenu-id="1" class="subsubmenu-item" aria-hidden="true"><a href="#">Sub-Submenu 1</a></li>
+                                <li id="sub-submenu-2" data-submenu-id="2" class="subsubmenu-item" aria-hidden="true"><a href="#">Sub-Submenu 2</a></li>
+                              </ul>
+                            </li>
+                            <li><a href="#">Submenu 1-2</a></li>
+                          </ul>
+                        </li>
+                        <li class="flyout-item">
+                          <a href="#">Menu 2</a>
+                          <ul class="flyout-submenu">
+                            <li><a href="#">Submenu 2-1</a></li>
+                          </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- List -->
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="lists-viewSelector">View:</label>
+                <select id="lists-viewSelector" onchange="toggleListsView()">
+                <option value="Original">Original</option>
+                <option value="Robust Lists Element Moved To Child">Robust Lists Element Moved To Child</option>
+                <option value="Robust Lists Multiple Attribute Change">Robust Lists Multiple Attribute Change</option>
+                <option value="Robust Lists Fail Multiple Attribute Change">Robust Lists Fail Multiple Attribute Change</option>
+                </select>
+            </div>
+            <div class="component">
+                <h3>List</h3>
+                <ul class="styled-list" id="list-1" data-value="List 1" class="active" data-route="home" placeholder="list 1">
+                    <li id="list-item-1">
+                        <div id="child-div-for-lists">
+                            List Item 1
+                        </div>
+                    </li>
+                    <li id="list-item-2">List Item 2</li>
+                    <li id="list-item-3">List Item 3</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="table-viewSelector">View:</label>
+                <select id="table-viewSelector" onchange="toggleTableChangeView()">
+                <option value="Original">Original</option>
+                <option value="Robust Table Element Moved To Parent">Robust Table Element Moved To Parent</option>
+                <option value="Robust Table Multiple Attribute Change">Robust Table Multiple Attribute Change</option>
+                <option value="Robust Table Fail Multiple Attribute Change">Robust Table Fail Multiple Attribute Change</option>
+                </select>
+            </div>
+            <div class="component">
+                <h3>Table</h3>
+                <div class="table-container" id="table-container">
+                    <div class="parent component" id="parent-div">
+                        <table class="styled-table" id="table-component" data-user-id="table rows and column" placeholder="Table Content">
+                            <thead>
+                                <tr>
+                                    <th>Header 1</th>
+                                    <th>Header 2</th>
+                                    <th>Header 3</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Row 1, Cell 1</td>
+                                    <td>Row 1, Cell 2</td>
+                                    <td>Row 1, Cell 3</td>
+                                </tr>
+                                <tr>
+                                    <td>Row 2, Cell 1</td>
+                                    <td>Row 2, Cell 2</td>
+                                    <td>Row 2, Cell 3</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Groups -->
+        <div class="component">
+            <h3>Input Group</h3>
+            <label for="field1">Field 1</label>
+            <input type="text" id="field1" oninput="toggleField2()" placeholder="Enter something...">
+            <label for="field2" id="field2-label" style="display: none;">Field 2</label>
+            <input type="text" id="field2" style="display: none;" placeholder="This appears after Field 1 is filled">
+        </div>
+
+        <!-- Toggles -->
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="toggle-checkbox-viewSelector">View:</label>
+                <select id="toggle-checkbox-viewSelector" onchange="toggleSliderView()">
+                    <option value="Original">Original</option>
+                    <option value="Robust Toggle Checkbox Single Attribute Change Based on Accessibility">Robust Toggle Checkbox Single Attribute Change Based on Accessibility</option>
+                    <option value="Robust Toggle Checkbox Multiple Attribute Change Based on Accessibility">Robust Toggle Checkbox Multiple Attribute Change Based on Accessibility</option>
+                    <option value="Robust Fail Toggle Checkbox Tag Change Based on Accessibility">Robust Fail Toggle Checkbox Tag Change Based on Accessibility</option>
+                    <option value="Robust Fail Toggle Checkbox Multiple Attribute Change Based on Accessibility">Robust Fail Toggle Checkbox Multiple Attribute Change Based on Accessibility</option>
+                    <option value="Robust Fail Toggle Checkbox All Attribute Change Based on Accessibility">Robust Fail Toggle Checkbox All Attribute Change Based on Accessibility</option>
+                    <option value="Robust Fail Toggle Checkbox Tag Removed Based on Accessibility">Robust Fail Toggle Checkbox Tag Removed Based on Accessibility</option>
+                </select>
+            </div>
+            <div class="component">
+                <h3>Toggle</h3>
+                <label class="toggle">
+                    <input type="checkbox" id="toggle-checkbox" aria-label="This is a checkbox" placeholder="Toggle Checkbox" aria-describedby="Contains a checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Radio Groups and Checkboxes -->
+        <div class="component">
+            <h3>Radio & Checkbox</h3>
+            <label>
+                <input type="radio" name="options" value="1"> Option 1
+            </label>
+            <label>
+                <input type="radio" name="options" value="2"> Option 2
+            </label>
+            <label>
+                <input type="checkbox" value="1"> Preference 1
+            </label>
+            <label>
+                <input type="checkbox" value="2"> Preference 2
+            </label>
+        </div>
+
+        <!-- Notifications -->
+        <div class="component">
+            <h3>Notifications</h3>
+            <button onclick="showNotification('success')">Show Success</button>
+            <button onclick="showNotification('error')">Show Error</button>
+            <button onclick="showNotification('info')">Show Info</button>
+            <div id="notification-container" class="notification-container"></div>
+        </div>
+
+        <!-- Pagination -->
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="pagination-viewSelector">View:</label>
+                <select id="pagination-viewSelector" onchange="togglePaginationView()">
+                <option value="Original">Original</option>
+                <option value="Robust Pagination Multiple Attribute Change">Robust Pagination Multiple Attribute Change</option>
+                <option value="Robust Pagination Exactly 50 percent Attribute Change">Robust Pagination Exactly 50 percent Attribute Change</option>
+                <option value="Robust Pagination Fail Multiple Attribute Change">Robust Pagination Fail Multiple Attribute Change</option>
+                </select>
+            </div>
+            <div class="component">
+                <h3>Pagination</h3>
+                <div class="pagination" id="pagination" placeholder="Contains pagination">
+                    <button class="page-btn" onclick="showPage(1)" id="pagination-1" placeholder="Button to move to Page 1" aria-label="Pagination for Page 1" aria-describedby="Page Number 1">1</button>
+                    <button class="page-btn" onclick="showPage(2)" id="pagination-2" placeholder="Button to move to Page 2" aria-label="Pagination for Page 2" aria-describedby="Page Number 2">2</button>
+                    <button class="page-btn" onclick="showPage(3)" id="pagination-3" placeholder="Button to move to Page 3" aria-label="Pagination for Page 3" aria-describedby="Page Number 3">3</button>
+                    <button class="page-btn" onclick="showPage(4)" id="pagination-4" placeholder="Button to move to Page 4" aria-label="Pagination for Page 4" aria-describedby="Page Number 4">4</button>
+                </div>
+                <div id="page-content">
+                    <p>Page 1 Content</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bars -->
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="progressbar-viewSelector">View:</label>
+                <select id="progressbar-viewSelector" onchange="toggleProgressBarView()">
+                <option value="Original">Original</option>
+                <option value="Robust Progress Bar Moved to Skip Parent">Robust Progress Bar Moved To Skip Parent</option>
+                <option value="Robust Progress Bar Removed">Robust Progress Bar Removed</option>
+                </select>
+            </div>
+            
+            <div class="component">
+                <h3>Progress Bars</h3>
+                <div class="progress-bar">
+                <div id="progress" style="width: 50%;" placeholder="This is Progress Bar">50%</div>
+                </div>
+                <br />
+                <button onclick="updateProgress(true)">Increase Progress</button>
+                <button onclick="updateProgress(false)">Decrease Progress</button>
+            </div>
+        </div>
+
+        <!-- Command Palette -->
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="command-palette-viewSelector">View:</label>
+                <select id="command-palette-viewSelector" onchange="toggleCommandPaletteView()">
+                <option value="Original">Original</option>
+                <option value="Robust Command Palette Custom Attribute Change">Robust Command Palette Custom Attribute Change</option>
+                <option value="Robust Command Palette Removed">Robust Command Palette Removed</option>
+                </select>
+            </div>
+
+            <div class="component">
+                <h3>Command Palette</h3>
+                <input type="text" id="command-palette" placeholder="Type a command..." data-user-id="12345">
+                <div id="suggestions" class="suggestions"></div>
+                <div id="command-result"></div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="modal-viewSelector">View:</label>
+                <select id="modal-viewSelector" onchange="toggleModalView()">
+                <option value="Original">Original</option>
+                <option value="Robust Modal Less Than 50 percent Change">Robust Modal Less Than 50 percent Change</option>
+                <option value="Robust Modal Removed">Robust Modal Removed</option>
+                </select>
+            </div>
+            <div class="component">
+                <h3>Modal</h3>
+                <button onclick="openModal()">Open Modal</button>
+                <div id="myModal" class="modal" placeholder="This is a Modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <p>This is a modal with more content!</p>
+                        <button onclick="alert('Modal button clicked!')">Modal Button</button>
+                        <button onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image -->
+
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="image-viewSelector">View:</label>
+                <select id="image-viewSelector" onchange="toggleImageView()">
+                <option value="Original">Original</option>
+                <option value="Robust Image Single Attribute Change">Robust Image Single Attribute Change</option>
+                <option value="Robust Image Removed">Robust Image Removed</option>
+                </select>
+            </div>
+            <div class="component">
+                <h3>Image</h3>
+                <div id="imageContainer" class="image-container">
+                    <img id="bstacklogo" src="https://browserstack.wpenginepowered.com/wp-content/themes/browserstack/img/bstack-logo-global.svg" alt="Displayed Image" placeholder="BrowserStack Logo Image"/>
+                </div>
+            </div>
+        </div>
+
+        <!-- Select Menu -->
+        <div class="component">
+            <h3>Select Menu</h3>
+            <select>
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+            </select>
+        </div>
+
+        <!-- Single Select Menu -->
+        <div class="component">
+            <h3>Select Menu with div</h3>
+            <div class="select-container">
+                <div class="select-box" id="singleSelectBox">Select an option</div>
+                <div class="options-container" id="singleOptionsContainer">
+                    <div class="option" data-value="option1">Option 1</div>
+                    <div class="option" data-value="option2">Option 2</div>
+                    <div class="option" data-value="option3">Option 3</div>
+                    <div class="option" data-value="option4">Option 4</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multi-Select Menu -->
+        <div class="component">
+            <h3>Multi-Select Menu</h3>
+            <div class="select-container">
+                <div class="select-box" id="multiSelectBox">
+                    <div class="multi-select-box" id="multiSelectDisplay">Select multiple options</div>
+                </div>
+                <div class="options-container" id="multiOptionsContainer">
+                    <div class="option" data-value="option1">Option 1</div>
+                    <div class="option" data-value="option2">Option 2</div>
+                    <div class="option" data-value="option3">Option 3</div>
+                    <div class="option" data-value="option4">Option 4</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Date Picker -->
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="datepicker-viewSelector">View:</label>
+                <select id="datepicker-viewSelector" onchange="toggleDatePickerView()">
+                <option value="Original">Original</option>
+                <option value="Robust Date Picker Change Custom Attribute">Robust Date Picker Change Custom Attribute</option>
+                </select>
+            </div>
+            <div class="component">
+                <h3>Date Picker</h3>
+                <input id="date-picker" type="date" data-user-id="date-picker">
+            </div>
+        </div>
+
+        <!-- Slider -->
+        <div>
+            <div class="progress-bar-dropdown">
+                <label for="slider-viewSelector">View:</label>
+                <select id="slider-viewSelector" onchange="toggleSlideView()">
+                    <option value="Original">Original</option>
+                    <option value="Robust Toggle Slider Single Attribute Change Based on Accessibility">Robust Toggle Slider Single Attribute Change Based on Accessibility</option>
+                    <option value="Robust Toggle Slider Multiple Attribute Change Based on Accessibility">Robust Toggle Slider Multiple Attribute Change Based on Accessibility</option>
+                    <option value="Robust Fail Toggle Slider Tag Change Based on Accessibility">Robust Fail Toggle Slider Tag Change Based on Accessibility</option>
+                    <option value="Robust Fail Toggle Slider Multiple Attribute Change Based on Accessibility">Robust Fail Toggle Slider Multiple Attribute Change Based on Accessibility</option>
+                    <option value="Robust Fail Toggle Slider All Attribute Change Based on Accessibility">Robust Fail Toggle Slider All Attribute Change Based on Accessibility</option>
+                    <option value="Robust Fail Toggle Slider Tag Removed Based on Accessibility">Robust Fail Toggle Slider Tag Removed Based on Accessibility</option>
+                </select>
+            </div>
+            <div class="component" id="slider-main-div">
+                <h3>Slider</h3>
+                <input type="range" id="slider" aria-label="This is a slider" placeholder="Toggle slider" aria-describedby="Contains a slider" min="0" max="100" value="50" oninput="updateSliderValue(this.value)">
+                <p>Value: <span id="slider-value">50</span></p>
+            </div>
+        </div>
+
+        <!-- Section for Tabs (Button and Link) to Open New Pages -->
+         <div>
+            <div class="progress-bar-dropdown">
+                <label for="tab-viewSelector">View:</label>
+                <select id="tab-viewSelector" onchange="toggleTabsView()">
+                <option value="Original">Original</option>
+                <option value="Robust Tab Multiple Attribute Change">Robust Tab Multiple Attribute Change</option>
+                <option value="Robust Tab Single Attribute Change Based on Accessibility">Robust Tab Single Attribute Change Based on Accessibility</option>
+                <option value="Robust Tabs Fail Multiple Attribute Change">Robust Tabs Fail Multiple Attribute Change</option>
+                </select>
+            </div>
+            <div class="component">
+                <h3>Open New Pages</h3>
+                <div class="tab-buttons">
+                    <button onclick="openNewPage('login.html')">Open Example Page 1</button>
+                    <br>
+                    <br>
+                    <a href="sign-up.html" target="_blank" class="tab-link"  id="new-tab-id" aria-label="This is New Tab" placeholder="Tab Option Available here" aria-describedby="Link to go to next page in new tab">Open Example Page 2</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button with pseudo-elements -->
+        <div class="component">
+            <h3>Button with Pseudo-elements</h3>
+            <div class="button-container">
+                <button class="pseudo-button">Click Me</button>
+            </div>
+        </div>
+
+
+        <!-- Link with pseudo-elements -->
+        <div class="component">
+            <h3>Pseudo-elements Link Example</h3>
+            <div class="link-container">
+                <a href="#" class="pseudo-link">Go Somewhere</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/misc.js"></script>
+</body>
+
+</html>
